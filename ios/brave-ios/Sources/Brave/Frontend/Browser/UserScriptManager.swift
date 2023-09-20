@@ -27,6 +27,7 @@ class UserScriptManager {
     .readyStateHelper,
     .youtubeQuality,
     .braveLeoAIChat,
+    .braveTranslate,
   ]
 
   /// Scripts that are loaded after `staticScripts`
@@ -113,6 +114,7 @@ class UserScriptManager {
     case searchResultAd
     case youtubeQuality
     case braveLeoAIChat
+    case braveTranslate
 
     fileprivate var script: WKUserScript? {
       switch self {
@@ -137,6 +139,7 @@ class UserScriptManager {
       case .readyStateHelper: return ReadyStateScriptHandler.userScript
       case .youtubeQuality: return YoutubeQualityScriptHandler.userScript
       case .braveLeoAIChat: return BraveLeoScriptHandler.userScript
+      case .braveTranslate: return BraveTranslateScriptHandler.userScript
       }
     }
 

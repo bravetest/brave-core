@@ -26,13 +26,15 @@ PageMetricsTabHelper::PageMetricsTabHelper(content::WebContents* web_contents)
   page_metrics_ = ProfileMiscMetricsServiceFactory::GetServiceForContext(
                       web_contents->GetBrowserContext())
                       ->GetPageMetrics();
-  DCHECK(page_metrics_);
 }
 
 PageMetricsTabHelper::~PageMetricsTabHelper() = default;
 
 void PageMetricsTabHelper::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
+  if (!page_metrics_) {
+    return;
+  }
   if (!CheckNavigationEvent(navigation_handle)) {
     return;
   }

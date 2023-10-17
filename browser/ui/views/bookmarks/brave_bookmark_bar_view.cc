@@ -21,7 +21,7 @@ BraveBookmarkBarView::BraveBookmarkBarView(Browser* browser,
           &BraveBookmarkBarView::OnShowAllBookmarksButtonPrefChanged,
           base::Unretained(this)));
 
-  if (bookmark_model_->loaded()) {
+  if (bookmark_model_ && bookmark_model_->loaded()) {
     UpdateOtherAndManagedButtonsVisibility();
   }
 }

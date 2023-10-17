@@ -42,6 +42,7 @@
 #include "ui/views/window/hit_test_utils.h"
 
 #if BUILDFLAG(ENABLE_BRAVE_VPN)
+#include "brave/browser/brave_browser_process.h"
 #include "brave/browser/brave_vpn/vpn_utils.h"
 #include "brave/browser/ui/views/toolbar/brave_vpn_button.h"
 #include "brave/components/brave_vpn/common/brave_vpn_utils.h"
@@ -119,6 +120,12 @@ bool HasMultipleUserProfiles() {
 bool IsAvatarButtonHideable(Profile* profile) {
   return !profile->IsIncognitoProfile() && !profile->IsGuestSession();
 }
+
+#if BUILDFLAG(ENABLE_BRAVE_VPN)
+bool BraveVpnHasConnectionAPI() {
+  return !!g_brave_browser_process->brave_vpn_connection_manager();
+}
+#endif  // BUILDFLAG(ENABLE_BRAVE_VPN)
 
 }  // namespace
 
@@ -231,7 +238,7 @@ void BraveToolbarView::Init() {
   UpdateWalletButtonVisibility();
 
 #if BUILDFLAG(ENABLE_BRAVE_VPN)
-  if (brave_vpn::IsAllowedForContext(profile)) {
+  if (brave_vpn::IsAllowedForContext(profile) && BraveVpnHasConnectionAPI()) {
     brave_vpn_ = container_view->AddChildViewAt(
         std::make_unique<BraveVPNButton>(browser()),
         *container_view->GetIndexOf(GetAppMenuButton()) - 1);

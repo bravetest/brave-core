@@ -52,6 +52,9 @@ import { LoadingPanel } from '../loading_panel/loading_panel'
 import {
   PendingTransactionNetworkFeeAndSettings //
 } from '../pending-transaction-network-fee/pending-transaction-network-fee'
+import {
+  TransactionSimulationNotSupportedSheet //
+} from '../transaction_simulation_not_supported_sheet/transaction_simulation_not_supported_sheet'
 
 // Styled Components
 import {
@@ -96,9 +99,11 @@ const ICON_CONFIG = { size: 'big', marginLeft: 0, marginRight: 0 } as const
 const NftAssetIconWithPlaceholder = withPlaceholderIcon(NftIcon, ICON_CONFIG)
 
 export const ConfirmTransactionPanel = ({
-  retrySimulation
+  retrySimulation,
+  showSimulationNotSupportedMessage
 }: {
   readonly retrySimulation?: () => void
+  showSimulationNotSupportedMessage?: boolean
 }) => {
   // redux
   const activeOrigin = useUnsafeWalletSelector(WalletSelectors.activeOrigin)
@@ -471,12 +476,14 @@ export const ConfirmTransactionPanel = ({
 
       <Column fullWidth>
         <FooterContainer>
-          {retrySimulation && !isSimulationWarningDismissed && (
-            <TxWarningBanner
-              retrySimulation={retrySimulation}
-              onDismiss={() => setIsSimulationWarningDismissed(true)}
-            />
-          )}
+          {retrySimulation &&
+            !isSimulationWarningDismissed &&
+            !showSimulationNotSupportedMessage && (
+              <TxWarningBanner
+                retrySimulation={retrySimulation}
+                onDismiss={() => setIsSimulationWarningDismissed(true)}
+              />
+            )}
         </FooterContainer>
         <PendingTransactionActionsFooter
           onConfirm={onConfirm}
@@ -491,6 +498,12 @@ export const ConfirmTransactionPanel = ({
           setIsWarningCollapsed={setIsWarningCollapsed}
         />
       </Column>
+      {showSimulationNotSupportedMessage && transactionsNetwork && (
+        <TransactionSimulationNotSupportedSheet
+          //
+          network={transactionsNetwork}
+        />
+      )}
     </StyledWrapper>
   )
 }

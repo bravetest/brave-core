@@ -1,8 +1,8 @@
 diff --git a/build/config/compiler/BUILD.gn b/build/config/compiler/BUILD.gn
-index 973d8bcbd2f1fa714ecd6f2752efde6e6770f5d8..644a484dde2cf20dd3a11e5ba4ad476f75c57fbf 100644
+index abb1e1aecfff990a83e9c75ff32e82917d6501f8..ed8f4d5c4e9e8297b34f53e1a6226db67d39a408 100644
 --- a/build/config/compiler/BUILD.gn
 +++ b/build/config/compiler/BUILD.gn
-@@ -588,7 +588,6 @@ config("compiler") {
+@@ -546,7 +546,6 @@ config("compiler") {
    }
  
    if (is_clang && !is_nacl && current_os != "zos") {
@@ -10,7 +10,7 @@ index 973d8bcbd2f1fa714ecd6f2752efde6e6770f5d8..644a484dde2cf20dd3a11e5ba4ad476f
      if (save_reproducers_on_lld_crash && use_lld) {
        ldflags += [
          "-fcrash-diagnostics=all",
-@@ -2428,14 +2427,7 @@ config("default_stack_frames") {
+@@ -2406,14 +2405,7 @@ config("default_stack_frames") {
  # [1]: https://pinpoint-dot-chromeperf.appspot.com/job/132bc772be0000
  # [2]: https://crrev.com/c/5447532
  config("optimize") {

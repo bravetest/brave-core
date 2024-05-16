@@ -25,6 +25,7 @@
   "//components/omnibox/browser/vector_icons/switch.icon": "leo_window_tab",
   "//components/vector_icons/back_arrow.icon": "leo_browser_back",
   "//components/vector_icons/extension.icon": "leo_browser_extensions",
+  "//components/vector_icons/extension_chrome_refresh.icon": "leo_browser_extensions",
   "//components/vector_icons/forward_arrow.icon": "leo_browser_forward",
   "//components/vector_icons/https_valid.icon": "leo_lock_plain",
   "//components/vector_icons/not_secure_warning.icon": "leo_warning_triangle_filled",

@@ -80,8 +80,9 @@ public class BraveWalletNetworksPreferenceFragment extends BravePreferenceFragme
         Bundle fragmentArgs = new Bundle();
         fragmentArgs.putString(ADD_NETWORK_FRAGMENT_ARG_CHAIN_ID, chainId);
         fragmentArgs.putBoolean(ADD_NETWORK_FRAGMENT_ARG_ACTIVE_NETWORK, activeNetwork);
-        Intent intent = mSettingsLauncher.createSettingsActivityIntent(
-                getActivity(), BraveWalletAddNetworksFragment.class.getName(), fragmentArgs);
+        Intent intent =
+                mSettingsLauncher.createSettingsActivityIntent(
+                        getActivity(), BraveWalletAddNetworksFragment.class, fragmentArgs);
         mAddNetworkActivityResultLauncher.launch(intent);
     }
 

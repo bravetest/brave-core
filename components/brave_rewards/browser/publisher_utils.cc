@@ -21,9 +21,9 @@ namespace brave_rewards {
 
 namespace {
 
-const std::array kMediaPlatformDomains = {"twitter.com", "github.com",
-                                          "reddit.com",  "twitch.tv",
-                                          "vimeo.com",   "youtube.com"};
+const std::array kMediaPlatformDomains = {
+    "twitter.com", "github.com",  "reddit.com", "twitch.tv",
+    "vimeo.com",   "youtube.com", "x.com"};
 
 bool IsMediaPlatformURL(const GURL& url) {
   return base::ranges::any_of(kMediaPlatformDomains, [&url](auto* domain) {

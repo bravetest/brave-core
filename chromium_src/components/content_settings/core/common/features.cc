@@ -17,7 +17,6 @@ OVERRIDE_FEATURE_DEFAULT_STATES({{
     // Disable content settings indexing as it's currently doesn't work well
     // with our BravePrefProvider.
     // TODO(https://github.com/brave/brave-browser/issues/37877).
-    {kHostIndexedMetadataGrants, base::FEATURE_DISABLED_BY_DEFAULT},
     {kIndexedHostContentSettingsMap, base::FEATURE_DISABLED_BY_DEFAULT},
 }});
 

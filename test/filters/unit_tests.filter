@@ -49,7 +49,7 @@
 -ApcScrimManagerImplTest.RestoresTheOriginalHiddenStateOnWebcontentsVisibibleTransition
 -ApcScrimManagerImplTest.ShutDownDisablesAndHidesScrim
 -ApcScrimManagerImplTest.UpdatesVisibilityOnWebcontentsVisibilityChanged
--AudioStreamCoordinatorTest.ConnectToAudioCaptuerAndReceiveBuses
+-AudioStreamCoordinatorTest.ConnectToAudioCapturerAndReceiveBuses
 -AutofillFieldPromoControllerImplTest.CloseViewOnFailingMaybeShowPromo
 -AutofillFieldPromoControllerImplTestWithView.CloseViewOnControllerDeletion
 -AutofillFieldPromoControllerImplTestWithView.CloseViewOnFrameDeleted
@@ -88,9 +88,11 @@
 -CookieControlsContentViewUnitTest.ToggleButton_Initial
 -CookieControlsContentViewUnitTest.ToggleButton_UpdatedSites
 -CookieControlsIconViewUnitTest.*
--CookieControlsUserBypassTest.SiteCounts
+-CookieControlsUserBypassTest.*
 -CoreTabHelperWindowUnitTest.SearchWithLens_LensPingEnabled_TriggersLensPing
 -CpuHealthTrackerBrowserTest.*
+-CreateShortcutBrowserCommandControllerTest.EnabledValidUrl
+-CreateShortcutBrowserCommandControllerTest.InvalidSchemeDisabled
 -CustomCursorSuppressorTest.*
 -CustomizeChromeFeaturePromoHelperTest.*
 -DefaultBrowserPromptManagerTest.*
@@ -183,6 +185,7 @@
 -PreRedirectionURLObserverTest.OneNavigationTwoSameDocumentNavigations
 -PreRedirectionURLObserverTest.OneNavigationTwoSubframeNavigations
 -PreRedirectionURLObserverTest.ThreeNavigations
+-ProductSpecificationsIconViewIntegrationTest.TestIconVisibility
 -ProfileManagementNavigationThrottleRedirectTest.*
 -ProfileManagementNavigationThrottleTest.*
 -ProfileTokenNavigationThrottleTest.*
@@ -282,7 +285,7 @@
 -TabContainerTest.GroupUnderlineBasics
 
 # Test below are disabled as we have our own ink drop configs.
--ChromeRefresh2023OnOff/ToolbarInkDropUtilTest.ConfigureInkDropForToolbarTest/*
+-ToolbarInkDropUtilTest.ConfigureInkDropForToolbarTest
 
 # The following tests are disabled for BraveRenderViewContextMenu::InitMenu
 # attempting to check Tor statuses, which dereferences an uninitialised
@@ -589,7 +592,7 @@
 # brave/chromium_src/components/permissions/permission_uma_util.cc
 # GetUkmSourceId override.
 -All/SiteSettingsHandlerTest.NotificationPermissionRevokeUkm/*
--UnusedSitePermissionsServiceTest.UnusedSitePermissionsServiceTest
+-All/UnusedSitePermissionsServiceTest.UnusedSitePermissionsServiceTest/*
 
 # This test fails because we disable kVisualQuerySuggestions
 -CompanionUrlBuilderTest.MsbbAndPcOn

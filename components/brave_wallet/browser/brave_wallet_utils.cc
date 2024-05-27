@@ -889,7 +889,7 @@ mojom::NetworkInfoPtr GetKnownChain(PrefService* prefs,
     }
     return nullptr;
   }
-  NOTREACHED();
+  NOTREACHED_IN_MIGRATION();
   return nullptr;
 }
 
@@ -1047,7 +1047,7 @@ bool KnownChainExists(const std::string& chain_id, mojom::CoinType coin) {
       }
     }
   } else {
-    NOTREACHED() << coin;
+    NOTREACHED_IN_MIGRATION() << coin;
   }
   return false;
 }
@@ -1155,7 +1155,7 @@ std::unique_ptr<std::vector<uint8_t>> MnemonicToEntropy(
       entropy_size = 32;
       break;
     default:
-      NOTREACHED();
+      NOTREACHED_IN_MIGRATION();
   }
   DCHECK(IsValidEntropySize(entropy_size)) << entropy_size;
 
@@ -1451,7 +1451,7 @@ std::vector<mojom::NetworkInfoPtr> GetAllKnownChains(PrefService* prefs,
     return result;
   }
 
-  NOTREACHED();
+  NOTREACHED_IN_MIGRATION();
   return result;
 }
 
@@ -1576,7 +1576,7 @@ std::string GetKnownNetworkId(mojom::CoinType coin,
   if (coin == mojom::CoinType::ZEC) {
     return GetKnownZecNetworkId(chain_id);
   }
-  NOTREACHED() << coin;
+  NOTREACHED_IN_MIGRATION() << coin;
   return "";
 }
 
@@ -1674,7 +1674,7 @@ GURL GetUnstoppableDomainsRpcUrl(const std::string& chain_id) {
     return AddInfuraProjectId(GetInfuraURLForKnownChainId(chain_id));
   }
 
-  NOTREACHED();
+  NOTREACHED_IN_MIGRATION();
   return GURL();
 }
 
@@ -2077,7 +2077,7 @@ std::string GetPrefKeyForCoinType(mojom::CoinType coin) {
     case mojom::CoinType::SOL:
       return kSolanaPrefKey;
   }
-  NOTREACHED() << coin;
+  NOTREACHED_IN_MIGRATION() << coin;
   return "";
 }
 
@@ -2095,7 +2095,7 @@ std::optional<mojom::CoinType> GetCoinTypeFromPrefKey_DEPRECATED(
   } else if (key == kZCashPrefKey) {
     return mojom::CoinType::ZEC;
   }
-  NOTREACHED() << key;
+  NOTREACHED_IN_MIGRATION() << key;
   return std::nullopt;
 }
 
@@ -2137,7 +2137,7 @@ mojom::BlockchainTokenPtr GetBitcoinNativeToken(const std::string& chain_id) {
     result->logo = "btc.png";
     result->coingecko_id = "";
   } else {
-    NOTREACHED() << chain_id;
+    NOTREACHED_IN_MIGRATION() << chain_id;
   }
 
   return result;
@@ -2154,7 +2154,7 @@ mojom::BlockchainTokenPtr GetZcashNativeToken(const std::string& chain_id) {
     result->logo = "zec.png";
     result->coingecko_id = "zec";
   } else {
-    NOTREACHED() << chain_id;
+    NOTREACHED_IN_MIGRATION() << chain_id;
   }
 
   return result;

@@ -5508,7 +5508,7 @@ class EnsGetRecordHandler : public EthCallHandler {
       return MakeJsonRpcTupleResponse(
           eth_abi::TupleEncoder().AddBytes(contenthash));
     }
-    NOTREACHED();
+    NOTREACHED_IN_MIGRATION();
     return std::nullopt;
   }
 
@@ -5618,7 +5618,7 @@ class OffchainGatewayHandler {
     auto* data = payload->GetDict().FindString("data");
     auto bytes = PrefixedHexStringToBytes(*data);
     if (!bytes) {
-      NOTREACHED();
+      NOTREACHED_IN_MIGRATION();
       return std::nullopt;
     }
 
@@ -5672,7 +5672,7 @@ class OffchainGatewayHandler {
         }
       }
     } else {
-      NOTREACHED();
+      NOTREACHED_IN_MIGRATION();
       return std::nullopt;
     }
 

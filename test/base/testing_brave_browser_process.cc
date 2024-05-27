@@ -65,28 +65,28 @@ brave_shields::AdBlockService* TestingBraveBrowserProcess::ad_block_service() {
 #if BUILDFLAG(ENABLE_GREASELION)
 greaselion::GreaselionDownloadService*
 TestingBraveBrowserProcess::greaselion_download_service() {
-  NOTREACHED();
+  NOTREACHED_IN_MIGRATION();
   return nullptr;
 }
 #endif
 
 debounce::DebounceComponentInstaller*
 TestingBraveBrowserProcess::debounce_component_installer() {
-  NOTREACHED();
+  NOTREACHED_IN_MIGRATION();
   return nullptr;
 }
 
 #if BUILDFLAG(ENABLE_REQUEST_OTR)
 request_otr::RequestOTRComponentInstallerPolicy*
 TestingBraveBrowserProcess::request_otr_component_installer() {
-  NOTREACHED();
+  NOTREACHED_IN_MIGRATION();
   return nullptr;
 }
 #endif
 
 brave::URLSanitizerComponentInstaller*
 TestingBraveBrowserProcess::URLSanitizerComponentInstaller() {
-  NOTREACHED();
+  NOTREACHED_IN_MIGRATION();
   return nullptr;
 }
 
@@ -102,7 +102,7 @@ TestingBraveBrowserProcess::localhost_permission_component() {
 
 brave_component_updater::LocalDataFilesService*
 TestingBraveBrowserProcess::local_data_files_service() {
-  NOTREACHED();
+  NOTREACHED_IN_MIGRATION();
   return nullptr;
 }
 
@@ -125,50 +125,50 @@ TestingBraveBrowserProcess::ipfs_client_updater() {
 #endif
 
 p3a::P3AService* TestingBraveBrowserProcess::p3a_service() {
-  NOTREACHED();
+  NOTREACHED_IN_MIGRATION();
   return nullptr;
 }
 
 brave::BraveReferralsService*
 TestingBraveBrowserProcess::brave_referrals_service() {
-  NOTREACHED();
+  NOTREACHED_IN_MIGRATION();
   return nullptr;
 }
 
 brave_stats::BraveStatsUpdater*
 TestingBraveBrowserProcess::brave_stats_updater() {
-  NOTREACHED();
+  NOTREACHED_IN_MIGRATION();
   return nullptr;
 }
 
 brave_ads::BraveStatsHelper*
 TestingBraveBrowserProcess::ads_brave_stats_helper() {
-  NOTREACHED();
+  NOTREACHED_IN_MIGRATION();
   return nullptr;
 }
 
 ntp_background_images::NTPBackgroundImagesService*
 TestingBraveBrowserProcess::ntp_background_images_service() {
-  NOTREACHED();
+  NOTREACHED_IN_MIGRATION();
   return nullptr;
 }
 
 #if BUILDFLAG(ENABLE_SPEEDREADER)
 speedreader::SpeedreaderRewriterService*
 TestingBraveBrowserProcess::speedreader_rewriter_service() {
-  NOTREACHED();
+  NOTREACHED_IN_MIGRATION();
   return nullptr;
 }
 #endif
 
 brave_ads::ResourceComponent* TestingBraveBrowserProcess::resource_component() {
-  NOTREACHED();
+  NOTREACHED_IN_MIGRATION();
   return nullptr;
 }
 
 brave::BraveFarblingService*
 TestingBraveBrowserProcess::brave_farbling_service() {
-  NOTREACHED();
+  NOTREACHED_IN_MIGRATION();
   return nullptr;
 }
 
@@ -185,7 +185,7 @@ void TestingBraveBrowserProcess::SetBraveVPNConnectionManagerForTesting(
 
 misc_metrics::ProcessMiscMetrics*
 TestingBraveBrowserProcess::process_misc_metrics() {
-  NOTREACHED();
+  NOTREACHED_IN_MIGRATION();
   return nullptr;
 }
 

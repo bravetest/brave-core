@@ -13,6 +13,7 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "ui/events/base_event_utils.h"
 #include "ui/views/controls/button/button.h"
+#include "ui/views/test/button_test_api.h"
 
 class MockBraveTooltipDelegate : public brave_tooltips::BraveTooltipDelegate {
  public:
@@ -58,14 +59,9 @@ class BraveTooltipsTest : public ChromeViewsTestBase {
   }
 
   void ClickButton(views::Button* button) const {
-    ui::MouseEvent press_event(ui::ET_MOUSE_PRESSED, gfx::Point(1, 1),
-                               gfx::Point(), ui::EventTimeForNow(),
-                               ui::EF_LEFT_MOUSE_BUTTON, 0);
-    button->OnMousePressed(press_event);
-    ui::MouseEvent release_event(ui::ET_MOUSE_RELEASED, gfx::Point(1, 1),
-                                 gfx::Point(), ui::EventTimeForNow(),
-                                 ui::EF_LEFT_MOUSE_BUTTON, 0);
-    button->OnMouseReleased(release_event);
+    views::test::ButtonTestApi(button).NotifyClick(ui::MouseEvent(
+        ui::ET_MOUSE_PRESSED, gfx::Point(), gfx::Point(), base::TimeTicks(),
+        ui::EF_LEFT_MOUSE_BUTTON, ui::EF_LEFT_MOUSE_BUTTON));
   }
 
   testing::NiceMock<MockBraveTooltipDelegate> mock_tooltip_delegate_;

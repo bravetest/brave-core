@@ -90,10 +90,12 @@ import {
 
 interface Props {
   isAndroid?: boolean
+  isIOS?: boolean
 }
 
 export const SendScreen = React.memo((props: Props) => {
-  const { isAndroid = false } = props
+  const { isAndroid = false, isIOS = false } = props
+  const isMobile = isAndroid || isIOS
 
   // routing
   const query = useQuery()
@@ -469,8 +471,8 @@ export const SendScreen = React.memo((props: Props) => {
       <WalletPageWrapper
         wrapContentInBox={true}
         noCardPadding={true}
-        hideNav={isAndroid || isPanel}
-        hideHeader={isAndroid}
+        hideNav={isMobile || isPanel}
+        hideHeader={isMobile}
         noMinCardHeight={true}
         hideDivider={true}
         cardHeader={

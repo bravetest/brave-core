@@ -206,6 +206,24 @@
   <message name="IDS_SETTINGS_ACCESSIBLE_IMAGE_LABELS_SUBTITLE" desc="Subtitle for screen reader image labels feature.">
     If an image doesn’t have a useful description, Brave will try to provide one for you. To create descriptions, images are sent to Brave.
   </message>
+  <message name="IDS_SETTINGS_MAIN_NODE_ANNOTATIONS_DOWNLOAD_COMPLETE" desc="Success message when it has downloaded main node annotation files." translateable="false">
+    Main node annotation files downloaded
+  </message>
+  <message name="IDS_SETTINGS_MAIN_NODE_ANNOTATIONS_DOWNLOAD_ERROR" desc="Generic error message when it fails to download main node annotation files." translateable="false">
+    Can't download main node annotation files. Try again later.
+  </message>
+  <message name="IDS_SETTINGS_MAIN_NODE_ANNOTATIONS_DOWNLOAD_PROGRESS" desc="Download progress indicator after main node annotation is enabled. The user needs to download certain files for the feature to work." translateable="false">
+    Downloading main node annotation files… <ph name="PERCENT">$1<ex>17</ex></ph>%
+  </message>
+  <message name="IDS_SETTINGS_MAIN_NODE_ANNOTATIONS_DOWNLOADING" desc="Generic message when it has started downloading main node annotation files." translateable="false">
+    Downloading main node annotation files
+  </message>
+  <message name="IDS_SETTINGS_MAIN_NODE_ANNOTATIONS_TITLE" desc="Description for screen reader main node annotations feature." translateable="false">
+    Annotate main node
+  </message>
+  <message name="IDS_SETTINGS_MAIN_NODE_ANNOTATIONS_SUBTITLE" desc="Subtitle for screen reader main node annotation feature." translateable="false">
+    Identify the main landmark in web pages for assistive technology
+  </message>
   <message name="IDS_SETTINGS_PDF_OCR_DOWNLOAD_COMPLETE" desc="Success message when it has downloaded PDF OCR files.">
     Text recognition files downloaded
   </message>
@@ -792,6 +810,23 @@
     </message>
     <message name="IDS_SETTINGS_DEFAULT_BROWSER_MAKE_DEFAULT_BUTTON" desc="Text of the button used to make Brave the default browser on the user's system.">
       Make default
+    </message>
+  </if>
+
+  <if expr="chrome_root_store_cert_management_ui">
+    <!-- TODO(crbug.com/40928765): Make translatable once UI/strings are finalized. -->
+    <!-- Certificate Manager V2 Page -->
+    <message name="IDS_SETTINGS_CERTIFICATE_MANAGER_V2_CLIENT_CERTIFICATES" desc="Label for the client certificates tab in certificate manager." translateable="false">
+      Your certificates
+    </message>
+    <message name="IDS_SETTINGS_CERTIFICATE_MANAGER_V2_LOCAL_CERTIFICATES" desc="Label for the local certificates tab in certificate manager." translateable="false">
+      Local certificates
+    </message>
+    <message name="IDS_SETTINGS_CERTIFICATE_MANAGER_V2_CRS_CERTIFICATES" desc="Label for the Brave Root Store certificates tab in certificate manager." translateable="false">
+      Brave Root Store
+    </message>
+    <message name="IDS_SETTINGS_CERTIFICATE_MANAGER_V2_HASH_COPIED_TOAST" desc="Label for the hash copied toast message in certificate manager." translateable="false">
+      Hash copied to clipboard
     </message>
   </if>
 
@@ -2001,11 +2036,8 @@
   </message>
   <message name="IDS_SETTINGS_SAFETY_HUB_REVOKED_PERMISSIONS_SECONDARY_LABEL" desc="'Revoked Permissions' shows websites for which permissions have been revoked. This label is the description of the module in the site settings page.">
     {NUM_SITES, plural,
-     =1 {To protect your data, permissions were removed from a site}
-     other {To protect your data, permissions were removed from some sites}}
-  </message>
-  <message name="IDS_SETTINGS_SAFETY_HUB_ABUSIVE_NOTIFICATION_PERMISSIONS_SETTING_SUBLABEL" desc="'Revoked Permissions' shows the revoked permissions of websites. This text describes that abusive notification permissions were removed.">
-    Dangerous site. Brave removed Notifications.
+     =1 {To protect your privacy, permissions were removed from a site}
+     other {To protect your privacy, permissions were removed from some sites}}
   </message>
   <message name="IDS_SETTINGS_SAFETY_CHECK_UNUSED_SITE_PERMISSIONS_TOAST_BULK_LABEL" desc="'Unused Site Permissions' shows unused websites for which permissions have been revoked. This label is shown in a toast popup message after a user has clicked a button to acknowledge all revoked permissions.">
     {NUM_SITES, plural,
@@ -3348,8 +3380,11 @@
   <message name="IDS_SETTINGS_TRACKING_PROTECTION_IP_PROTECTION_TOGGLE_LABEL" desc="Label for a toggle that controls the IP protection feature." translateable="false">
     Hide your IP address
   </message>
-  <message name="IDS_SETTINGS_TRACKING_PROTECTION_IP_PROTECTION_TOGGLE_SUB_LABEL" desc="Sub-label for the IP protection toggle. Explains that the feature only works for signed-in users and that some traffic may be sent through privacy servers when the feature is on." translateable="false">
-    When you’re signed in to Brave, some of your traffic may be sent through privacy servers if Brave suspects a site may be tracking you
+  <message name="IDS_SETTINGS_TRACKING_PROTECTION_IP_PROTECTION_TOGGLE_SUB_LABEL" desc="Sub-label for the IP protection toggle. Explains that the feature only works for signed-in users and that some traffic may be sent through privacy servers when the feature is on. Provides a link to a help center article." translateable="false">
+    When you're signed in to Brave, this setting helps keep your IP address private. If Brave suspects a site may be tracking you, some of your traffic may be sent through privacy servers. Learn more about <ph name="LINK_BEGIN">&lt;a href="#" aria-label="$1" aria-description="$2" target="_blank"&gt;</ph>how IP protection works<ph name="LINK_END">&lt;/a&gt;</ph>
+  </message>
+  <message name="IDS_SETTINGS_TRACKING_PROTECTION_IP_PROTECTION_TOGGLE_LEARN_MORE_ARIA_LABEL" desc="Screenreader text for the help center article link in the sub-label text of the IP protection toggle." translateable="false">
+    Learn more about hiding your IP address
   </message>
   <message name="IDS_SETTINGS_TRACKING_PROTECTION_FINGERPRINTING_PROTECTION_TOGGLE_LABEL" desc="Label for a toggle that controls the fingerprinting protection feature." translateable="false">
     Limit digital fingerprinting
@@ -4556,6 +4591,11 @@
     {NUM_SITES, plural,
       =1 {Removed permissions for 1 unused site}
       other {Removed permissions for {NUM_SITES} unused sites}}
+  </message>
+  <message name="IDS_SETTINGS_SAFETY_HUB_REVOKED_PERMISSIONS_MENU_NOTIFICATION" desc="The revoked permissions module of Safety Hub revokes permissions of sites that the user hasn't visited in a while or that send abusive notifications. This label is for the notification in Brave's three-dot menu indicating for how many sites the permission was revoked.">
+    {NUM_SITES, plural,
+      =1 {Removed permissions for 1 site}
+      other {Removed permissions for {NUM_SITES} sites}}
   </message>
   <message name="IDS_SETTINGS_SAFETY_HUB_REVIEW_NOTIFICATION_PERMISSIONS_MENU_NOTIFICATION" desc="The review notification permissions module of Safety Hub marks sites that send a lot of notifications for review by the user. This label is for the notification in Brave's three-dot menu indicating how many sites should be reviewed.">
     {NUM_SITES, plural,

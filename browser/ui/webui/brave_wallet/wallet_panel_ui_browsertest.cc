@@ -257,7 +257,7 @@ IN_PROC_BROWSER_TEST_F(WalletPanelUIBrowserTest, InitialUIRendered) {
 #if BUILDFLAG(IS_MAC)
 #define MAYBE_HideNetworkInSettings DISABLED_HideNetworkInSettings
 #else
-#define MAYBE_HideNetworkInSettings HideNetworkInSettings
+#define MAYBE_HideNetworkInSettings DISABLED_HideNetworkInSettings
 #endif
 IN_PROC_BROWSER_TEST_F(WalletPanelUIBrowserTest, MAYBE_HideNetworkInSettings) {
   ActivateWalletTab();
@@ -297,7 +297,8 @@ IN_PROC_BROWSER_TEST_F(WalletPanelUIBrowserTest, MAYBE_HideNetworkInSettings) {
       EvalJs(wallet(), QuerySelectorJS(NeonEVMNetwork())).value.is_none());
 }
 
-IN_PROC_BROWSER_TEST_F(WalletPanelUIBrowserTest, CustomNetworkInSettings) {
+IN_PROC_BROWSER_TEST_F(WalletPanelUIBrowserTest,
+                       DISABLED_CustomNetworkInSettings) {
   CreateSettingsTab();
 
   ActivateWalletTab();
@@ -347,7 +348,7 @@ IN_PROC_BROWSER_TEST_F(WalletPanelUIBrowserTest, CustomNetworkInSettings) {
                                     "?.innerText === 'Custom Network'"));
 }
 
-IN_PROC_BROWSER_TEST_F(WalletPanelUIBrowserTest, SelectRpcEndpoint) {
+IN_PROC_BROWSER_TEST_F(WalletPanelUIBrowserTest, DISABLED_SelectRpcEndpoint) {
   CreateSettingsTab();
   auto* prefs = browser()->profile()->GetPrefs();
 

@@ -1,8 +1,8 @@
 diff --git a/chrome/browser/about_flags.cc b/chrome/browser/about_flags.cc
-index f72bd2e5f5f2cd2c6250028731ee527631d932df..2aba42ef644eb0d38b23c7536f20d3f0531a418f 100644
+index 7f68e3c6631e0612a5284c45b7653b5f0fa0751c..c3dc7cace5924fcb582dfc7dfd4b9bb7a3db54b7 100644
 --- a/chrome/browser/about_flags.cc
 +++ b/chrome/browser/about_flags.cc
-@@ -3935,6 +3935,7 @@ const FeatureEntry::FeatureVariation kWebAuthnEnclaveAuthenticatorVariations[] =
+@@ -3943,6 +3943,7 @@ const FeatureEntry::FeatureVariation kWebAuthnEnclaveAuthenticatorVariations[] =
  //
  // When adding a new choice, add it to the end of the list.
  const FeatureEntry kFeatureEntries[] = {
@@ -10,7 +10,7 @@ index f72bd2e5f5f2cd2c6250028731ee527631d932df..2aba42ef644eb0d38b23c7536f20d3f0
  // Include generated flags for flag unexpiry; see //docs/flag_expiry.md and
  // //tools/flags/generate_unexpire_flags.py.
  #include "build/chromeos_buildflags.h"
-@@ -11614,6 +11615,7 @@ void GetStorage(Profile* profile, GetStorageCallback callback) {
+@@ -11647,6 +11648,7 @@ void GetStorage(Profile* profile, GetStorageCallback callback) {
  
  bool ShouldSkipConditionalFeatureEntry(const flags_ui::FlagsStorage* storage,
                                         const FeatureEntry& entry) {

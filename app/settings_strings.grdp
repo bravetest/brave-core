@@ -20,6 +20,12 @@
   <message name="IDS_SETTINGS_SEND_FEEDBACK_ROLE_DESCRIPTION" desc="Accessibility role description for the send feedback button at the top right of a settings section. Spoken by screen readers when focusing the button but not visually rendered.">
     Send feedback button
   </message>
+  <message name="IDS_SETTINGS_COLUMN_HEADING_WHEN_ON" desc="The header used above a bulleted section on a Settings page that explains the functionality of a setting.">
+    When on
+  </message>
+  <message name="IDS_SETTINGS_COLUMN_HEADING_CONSIDER" desc="The header used above a bulleted section on a Settings page that notes things the user might want to consider when turning this setting on or off.">
+    Things to consider
+  </message>
 
   <if expr="not chromeos_ash">
     <message name="IDS_RELAUNCH_CONFIRMATION_DIALOG_BODY" desc="The body of the modal dialog that we show when users click on relaunch and they have open Private windows. The dialog serves to warn the users about losing their Private windows if they proceed with the relaunch.">
@@ -1172,6 +1178,9 @@
   <message name="IDS_SETTINGS_CLEAR_PERIOD_NOT_SELECTED" desc="This is the text that is shown in the clear browsing data time range dropdown until the user selected a time range from this dropdown.">
     Select a time range
   </message>
+  <message name="IDS_SETTINGS_CLEAR_BROWSING_DATA_TIME_PERIOD_REQUIRED_ANNOUNCEMENT" translateable="false" desc="This text is for the Clear Browsing Data dialog but does not show in the dialog UI. If the user is a screen reader user, did not select a time period for deletion, and clicked the 'Clear' button, then this text is read out by the screen reader before the focus is moved to the time period dropdown.">
+    Please select a time range
+  </message>
   <message name="IDS_SETTINGS_NOTIFICATION_WARNING" desc="A warning that notifications will be disabled by deleting cookies for this site.">
     Notifications will be disabled
   </message>
@@ -1581,9 +1590,6 @@
   <message name="IDS_SETTINGS_ANTI_ABUSE_DESCRIPTION" desc="The label used for the anti-abuse site settings description.">
     Sites you visit can verify that you're a real profile and not a bot
   </message>
-  <message name="IDS_SETTINGS_ANTI_ABUSE_WHEN_ON_HEADER" desc="The header used for the section that informs users of the anti-abuse features.">
-    When on
-  </message>
   <message name="IDS_SETTINGS_ANTI_ABUSE_WHEN_ON_SECTION_ONE" desc="A description that informs users that Brave saves a small amount of data when the anti-abuse features are enabled.">
     A site you visit can save a small amount of info with Brave, mainly to validate you're not a bot
   </message>
@@ -1592,9 +1598,6 @@
   </message>
   <message name="IDS_SETTINGS_ANTI_ABUSE_WHEN_ON_SECTION_THREE" desc="A description that informs users how their browsing could be helped by the anti-abuse features.">
     Browsing is faster because a site is less likely to ask you to verify you're a real profile
-  </message>
-  <message name="IDS_SETTINGS_ANTI_ABUSE_THINGS_TO_CONSIDER_HEADER" desc="The header used for the section that informs users of additional things to consider when the anti-abuse features are enabled.">
-    Things to consider
   </message>
   <message name="IDS_SETTINGS_ANTI_ABUSE_THINGS_TO_CONSIDER_SECTION_ONE" desc="A description that informs users that the anti-abuse features do not reveal their browsing history.">
     This setting works without identifying you or allowing sites to see your browsing history, though sites can share a small amount of info as part of the verification
@@ -1764,12 +1767,6 @@
   <message name="IDS_SETTINGS_AD_MEASUREMENT_PAGE_TOGGLE_SUB_LABEL" desc="A description of the new Ad measurement setting. This text appears beneath the name of the new setting, 'Ad measurement', and is associated with the control that a user can turn on or off. **** CONTEXT PRIVACY SANDBOX **** Brave's Privacy Sandbox initiative 1) deprecates third-party cookies in Brave, 2) supports free and open content on the web (by finding better ways to support ads online), 3) while providing stronger privacy protections for users. You can see a high-level description of this public project at www.privacysanbox.com. **** NEW SETTINGS SECTION IN CHROME **** 3 new ad-specific settings appear on an 'Ad privacy' page in Brave settings. For an equivalent structure, see 'Security' on chrome://settings/privacy that opens chrome://settings/security. Likewise, 'Ad privacy' on chrome://settings/privacy will open chrome://settings/AdPrivacy.">
     Sites and advertisers can measure the performance of their ads
   </message>
-  <message name="IDS_SETTINGS_AD_MEASUREMENT_PAGE_ENABLED_HEADING" desc="A label above bullet points that explain the functionality of this setting.">
-    When on
-  </message>
-  <message name="IDS_SETTINGS_AD_MEASUREMENT_PAGE_CONSIDER_HEADING" desc="A label above bullet points that note things the user might want to consider when turning this setting on or off.">
-    Things to consider
-  </message>
   <message name="IDS_SETTINGS_AD_MEASUREMENT_PAGE_ENABLED_BULLET_1" desc="1 of 3 bullets in the 'When on' section that describes the Ad measurement setting. * 'Limited types of data': The Ad measurement API (for developers) and the Ad measurement control (for users) is offered by Brave. But Brave is a 'pass through', helping one site communicate information to another about the performance of an ad. That's where this passive construction comes from. Brave facilitates, but shouldn't be seen as a major actor here. And we don't want to suggest anything like 'Brave limits the types of data shared between sites,' because Brave can't do that. Any 2 sites can have a side agreement to share as much info as they like.">
     Limited types of data are shared between sites to measure the performance of their ads, such as whether you made a purchase after visiting a site
   </message>
@@ -1840,12 +1837,6 @@
   </message>
   <message name="IDS_SETTINGS_PRIVACY_GUIDE_COMPLETION_CARD_PRIVACY_SANDBOX_LABEL" desc="Text of the Privacy Sandbox label in the completion card of the 'Privacy Guide'.">
     Ad privacy
-  </message>
-  <message name="IDS_SETTINGS_PRIVACY_GUIDE_COMPLETION_CARD_TRACKING_PROTECTION_LABEL" desc="Text of the Tracking Protection label in the completion card of the 'Privacy Guide'." translateable="false">
-    Tracking Protection
-  </message>
-  <message name="IDS_SETTINGS_PRIVACY_GUIDE_COMPLETION_CARD_TRACKING_PROTECTION_SUB_LABEL" desc="Text of the Tracking Protection sub-label in the completion card of the 'Privacy Guide'." translateable="false">
-    Manage your tracking protections to make your experience more private on the web
   </message>
   <message name="IDS_SETTINGS_PRIVACY_GUIDE_COMPLETION_CARD_WAA_LABEL" desc="Text of the Web and App Activity label in the completion card of the 'Privacy Guide'.">
     Web &amp; App Activity
@@ -2224,9 +2215,6 @@
   <message name="IDS_SETTINGS_SAFEBROWSING_ENHANCED_BULLET_FIVE" desc="Bullet point under the safe browsing enhanced protection mode">
     Sends URLs to Safe Browsing to check them. Also sends a small sample of pages, downloads, extension activity, and system information to help discover new threats. Temporarily links this data to your Brave sync chain when you're signed in, to protect you across Brave apps.
   </message>
-  <message name="IDS_SETTINGS_SAFEBROWSING_ENHANCED_WHEN_ON_LABEL" desc="Label of 'When on' section under the Safe Browsing enhanced protection mode">
-    When on
-  </message>
   <message name="IDS_SETTINGS_SAFEBROWSING_ENHANCED_WHEN_ON_BULLET_TWO" desc="Bullet point under the Safe Browsing enhanced protection mode section titled 'When on'">
     In-depth scans for suspicious downloads.
   </message>
@@ -2238,9 +2226,6 @@
   </message>
   <message name="IDS_SETTINGS_SAFEBROWSING_ENHANCED_WHEN_ON_BULLET_FIVE" desc="Bullet point under the Safe Browsing enhanced protection mode section titled 'When on'">
     Warns you if you use a password that has been compromised in a data breach.
-  </message>
-  <message name="IDS_SETTINGS_SAFEBROWSING_ENHANCED_THINGS_TO_CONSIDER_LABEL" desc="Label of 'Things to consider' section under the Safe Browsing enhanced protection mode">
-    Things to consider
   </message>
   <message name="IDS_SETTINGS_SAFEBROWSING_ENHANCED_THINGS_TO_CONSIDER_BULLET_ONE" desc="Bullet point under the Safe Browsing enhanced protection mode section titled 'Things to consider'">
     Sends the URLs of sites you visit and a small sample of page content, downloads, extension activity, and system information to Google Safe Browsing to check if they're harmful.
@@ -2597,10 +2582,10 @@
   <message name="IDS_SETTINGS_SEARCH_ENGINES_MAKE_DEFAULT" desc="Text of the button that makes the selected engine the default search engine">
     Make default
   </message>
-  <message name="IDS_SETTINGS_SEARCH_ENGINES_ACTIVATE" desc="Text of the button that activates a search engine">
+  <message name="IDS_SETTINGS_SEARCH_ENGINES_ACTIVATE" desc="Text of the button that activates a search engine" meaning="To turn on/enable usage of the search engine">
     Activate
   </message>
-  <message name="IDS_SETTINGS_SEARCH_ENGINES_DEACTIVATE" desc="Text of the button that deactivates a search engine">
+  <message name="IDS_SETTINGS_SEARCH_ENGINES_DEACTIVATE" desc="Text of the button that deactivates a search engine" meaning="To turn off/disable usage of the search engine">
     Deactivate
   </message>
   <message name="IDS_SETTINGS_SEARCH_ENGINES_VIEW_DETAILS" desc="Label for button that allows the user to view details of a search engine">
@@ -3377,21 +3362,6 @@
   <message name="IDS_SETTINGS_TRACKING_PROTECTION_ADVANCED_LABEL" desc="Label for a section on the Tracking Protection settings page containing advanced options.">
     Advanced
   </message>
-  <message name="IDS_SETTINGS_TRACKING_PROTECTION_IP_PROTECTION_TOGGLE_LABEL" desc="Label for a toggle that controls the IP protection feature." translateable="false">
-    Hide your IP address
-  </message>
-  <message name="IDS_SETTINGS_TRACKING_PROTECTION_IP_PROTECTION_TOGGLE_SUB_LABEL" desc="Sub-label for the IP protection toggle. Explains that the feature only works for signed-in users and that some traffic may be sent through privacy servers when the feature is on. Provides a link to a help center article." translateable="false">
-    When you're signed in to Brave, this setting helps keep your IP address private. If Brave suspects a site may be tracking you, some of your traffic may be sent through privacy servers. Learn more about <ph name="LINK_BEGIN">&lt;a href="#" aria-label="$1" aria-description="$2" target="_blank"&gt;</ph>how IP protection works<ph name="LINK_END">&lt;/a&gt;</ph>
-  </message>
-  <message name="IDS_SETTINGS_TRACKING_PROTECTION_IP_PROTECTION_TOGGLE_LEARN_MORE_ARIA_LABEL" desc="Screenreader text for the help center article link in the sub-label text of the IP protection toggle." translateable="false">
-    Learn more about hiding your IP address
-  </message>
-  <message name="IDS_SETTINGS_TRACKING_PROTECTION_FINGERPRINTING_PROTECTION_TOGGLE_LABEL" desc="Label for a toggle that controls the fingerprinting protection feature." translateable="false">
-    Limit digital fingerprinting
-  </message>
-  <message name="IDS_SETTINGS_TRACKING_PROTECTION_FINGERPRINTING_PROTECTION_TOGGLE_SUB_LABEL" desc="Sub-label for the fingerprinting protection toggle. Explains that the feature helps prevent sites from tracking users via identifiers related to their device or browser." translateable="false">
-    This setting makes it harder for sites to identify you using data about your device and browser, such as your device model or browser version
-  </message>
   <message name="IDS_SETTINGS_TRACKING_PROTECTION_THIRD_PARTY_COOKIES_TOGGLE_LABEL" desc="Label for a toggle that blocks all third-party cookies when on.">
     Block all third-party cookies
   </message>
@@ -3409,9 +3379,6 @@
   </message>
   <message name="IDS_SETTINGS_TRACKING_PROTECTION_SITES_ALLOWED_COOKIES_DESCRIPTION" desc="Description of the section on the Tracking Protection settings page that lets users manage which sites are allowed to use third-party cookies. Explains how to use a wildcard to create an exception for an entire domain.">
     Affects the sites listed here. Inserting “[*.]” before a domain name creates an exception for the entire domain. For example, adding “[*.]google.com” means that third-party cookies can also be active for mail.google.com, because it’s part of google.com.
-  </message>
-  <message name="IDS_SETTINGS_THIRD_PARTY_COOKIES_ONLY_EXCEPTION_LABEL" desc="Label for an exception in the Tracking Protection exceptions list indicating that the exception only applies to third-party cookie blocking." translateable="false">
-    Only applies to third-party cookie blocking
   </message>
   <message name="IDS_SETTINGS_TRACKING_PROTECTION_ROLLBACK_NOTICE" desc="Notice text on the top of the 'Third-party cookies' settings page telling users that Tracking Protection is temporarily unavailable.">
     Tracking Protection is temporarily unavailable. While Brave is updating this feature, sites can temporarily use third-party cookies unless you block them. <ph name="BEGIN_LINK">&lt;a target="_blank" href="$1" aria-label="$2"&gt;</ph>Learn more<ph name="END_LINK">&lt;/a&gt;<ex>&lt;/a&gt;</ex></ph>

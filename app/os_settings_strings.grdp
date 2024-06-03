@@ -1283,29 +1283,45 @@
   <message name="IDS_SETTINGS_LARGE_MOUSE_CURSOR_LABEL" desc="Label for checkbox which enables showing a larger mouse cursor than normal.">
     Show large mouse cursor
   </message>
+  <!-- TODO(b/341770655): Finalize strings for Facegaze and mark translatable -->
   <message name="IDS_OS_SETTINGS_ACCESSIBILITY_FACEGAZE_LABEL" desc="Label for checkbox which enables controlling the mouse cursor and keyboard with face movements." translateable="false">
     Face control
   </message>
   <message name="IDS_OS_SETTINGS_ACCESSIBILITY_FACEGAZE_DESCRIPTION" desc="The description for the checkbox that enables controlling the mouse cursor and keyboard with face movements." translateable="false">
     Use face and gaze movement to control cursor and keyboard
   </message>
+  <message name="IDS_OS_SETTINGS_ACCESSIBILITY_FACEGAZE_CURSOR_SPEED_SECTION_NAME" desc="The name of a section in settings for controlling the cursor speed." translateable="false">
+    Speed
+  </message>
   <message name="IDS_OS_SETTINGS_ACCESSIBILITY_FACEGAZE_CURSOR_SPEED_UP_LABEL" desc="Label description for a slider that adjusts the cursor speed up for Face Gaze. This makes the cursor move faster or slower as the head moves up." translateable="false">
-    Move up
+    Cursor speed - up
   </message>
   <message name="IDS_OS_SETTINGS_ACCESSIBILITY_FACEGAZE_CURSOR_SPEED_DOWN_LABEL" desc="Label description for a slider that adjusts the cursor speed down for Face Gaze. This makes the cursor move faster or slower as the head moves down." translateable="false">
-    Move down
+    Cursor speed - down
   </message>
   <message name="IDS_OS_SETTINGS_ACCESSIBILITY_FACEGAZE_CURSOR_SPEED_LEFT_LABEL" desc="Label description for a slider that adjusts the cursor speed to the left for Face Gaze. This makes the cursor move faster or slower as the head moves to the left." translateable="false">
-    Move left
+    Cursor speed - left
   </message>
   <message name="IDS_OS_SETTINGS_ACCESSIBILITY_FACEGAZE_CURSOR_SPEED_RIGHT_LABEL" desc="Label description for a slider that adjusts the cursor speed to the right for Face Gaze. This makes the cursor move faster or slower as the head moves to the right." translateable="false">
-    Move right
+    Cursor speed - right
   </message>
-  <message name="IDS_OS_SETTINGS_ACCESSIBILITY_FACEGAZE_CURSOR_SMOOTHING_LABEL" desc="Label description for a slider that adjusts the cursor smoothing rate for Face Gaze. Smoothing makes the cursor movement less jumpy at the expense of being reactive" translateable="false">
+  <message name="IDS_OS_SETTINGS_ACCESSIBILITY_FACEGAZE_CURSOR_SMOOTHING_LABEL" desc="Label description for a slider that adjusts the cursor smoothing rate for Face Gaze. Smoothing makes the cursor movement less jumpy at the expense of being reactive." translateable="false">
     (Advanced) Smooth pointer
   </message>
   <message name="IDS_OS_SETTINGS_ACCESSIBILITY_FACEGAZE_CURSOR_ACCELERATION_LABEL" desc="Label description for a toggle button that turns on mouse acceleration for Face Gaze. Mouse acceleration makes the cursor move faster when the head moves quickly." translateable="false">
     (Advanced) Use mouse acceleration
+  </message>
+  <message name="IDS_OS_SETTINGS_ACCESSIBILITY_FACEGAZE_ACTIONS_ENABLED_LABEL" desc="Label description for a toggle button that enables or disables using facial gestures to trigger actions." translateable="false">
+    Use facial gestures to trigger actions
+  </message>
+  <message name="IDS_OS_SETTINGS_ACCESSIBILITY_FACEGAZE_CURSOR_CONTROL_ENABLED_LABEL" desc="Label description for a toggle button that enables or disables using head movement to control the mouse cursor." translateable="false">
+    Use head movement to control mouse cursor
+  </message>
+  <message name="IDS_OS_SETTINGS_ACCESSIBILITY_FACEGAZE_ADJUST_SEPARATELY_LABEL" desc="Label for a toggle button that allows the user to adjust the cursor speed separately for up/down/left/right speeds in FaceGaze." translateable="false">
+    Adjust speed in every direction separately
+  </message>
+  <message name="IDS_OS_SETTINGS_ACCESSIBILITY_FACEGAZE_CURSOR_SPEED_LABEL" desc="Label description for a slider that adjusts the cursor speed for Face Gaze. This makes the cursor move faster or slower as the head moves." translateable="false">
+    Cursor speed
   </message>
   <message name="IDS_OS_SETTINGS_SLIDER_LABEL_100" desc="Label for the side of a slider that goes from or to 100.">
     100
@@ -3460,9 +3476,6 @@ Press an assigned switch or key to remove assignment.
   </message>
   <message name="IDS_SETTINGS_MOUSE_SWAP_BUTTONS_LABEL" desc="In Device Settings, the text next to the checkbox to set the primary mouse button to the right button instead of the left button.">
     Swap primary mouse button
-  </message>
-  <message name="IDS_OS_SETTINGS_REVAMP_MOUSE_SWAP_BUTTONS_LABEL" desc="In Device Settings, the text next to the checkbox to set the primary mouse button to the right button instead of the left button.">
-    Primary mouse button
   </message>
   <message name="IDS_SETTINGS_POINTING_STICK_PRIMARY_BUTTON_LABEL" desc="In Device Settings, the text next to the dropdown menu to set the primary pointing stick (a.k.a. TrackPoint) button. (TrackPoint is a trademark that's not translated.)">
     Primary TrackPoint button
@@ -6280,6 +6293,12 @@ Press &amp; hold keyboard keys to see accent marks and special characters. This 
   </message>
   <message name="IDS_OS_SETTINGS_APP_PARENTAL_CONTROLS_PIN_MISMATCH_ERROR_TEXT" desc="The text displayed under the PIN input section that notifies the user that the re-entered PIN does not match the first PIN entered.">
     PINs do not match
+    </message>
+  <message name="IDS_OS_SETTINGS_APP_PARENTAL_CONTROLS_APPS_TITLE_TEXT" desc="The title text for the apps parental controls page listing the user's blockable apps.">
+    Apps
+  </message>
+  <message name="IDS_OS_SETTINGS_APP_PARENTAL_CONTROLS_BLOCKED_APPS_COUNT_TEXT" desc="Text showing the number of blocked applications on the apps parental controls page.">
+    <ph name="BLOCKED_APPS_SIZE">$1<ex>5</ex></ph> of <ph name="APPS_LIST_SIZE">$2<ex>30</ex></ph> apps blocked
   </message>
   <message name="IDS_OS_SETTINGS_APP_PARENTAL_CONTROLS_PIN_WRONG_LENGTH_ERROR_TEXT" desc="The text displayed under the PIN input section that notifies the user that the PIN should not be shorter than 6 digits">
     PIN must be 6 digits
@@ -6320,8 +6339,14 @@ Press &amp; hold keyboard keys to see accent marks and special characters. This 
   <message name="IDS_SETTINGS_ANDROID_APPS_SUBTEXT" desc="Description for the section for enabling and managing Google Play Store (Android) apps.">
     Install apps and games from Google Play on your <ph name="DEVICE_TYPE">$1<ex>Chromebook</ex></ph>. <ph name="LINK_BEGIN">&lt;a target="_blank" href="$2<ex>https://google.com/</ex>"&gt;</ph>Learn more<ph name="LINK_END">&lt;/a&gt;</ph>
   </message>
+  <message name="IDS_SETTINGS_ANDROID_APPS_SUBTEXT_DESCRIPTION" desc="Accessibility description for the section for enabling and managing Google Play Store (Android) apps." is_accessibility_with_no_ui="true">
+    Install apps and games from Google Play on your <ph name="DEVICE_TYPE">$1<ex>Chromebook</ex></ph>.
+  </message>
   <message name="IDS_OS_SETTINGS_REVAMP_ANDROID_APPS_SUBTEXT" desc="Description for the section for enabling and managing Google Play Store (Android) apps.">
     You can download Android apps and games through the Play Store. <ph name="LINK_BEGIN">&lt;a target="_blank" href="$1<ex>https://google.com/</ex>"&gt;</ph>Learn more<ph name="LINK_END">&lt;/a&gt;</ph>
+  </message>
+  <message name="IDS_OS_SETTINGS_REVAMP_ANDROID_APPS_SUBTEXT_DESCRIPTION" desc="Accessibility description for the section for enabling and managing Google Play Store (Android) apps." is_accessibility_with_no_ui="true">
+    You can download Android apps and games through the Play Store.
   </message>
   <!-- TODO(jamescook): Use device type instead of "Chromebook", which may
         require changing ArcPlayTermsOfServiceConsent resource id handling. -->

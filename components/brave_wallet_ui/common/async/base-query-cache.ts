@@ -308,7 +308,7 @@ export class BaseQueryCache {
   // responsible in providing correct logo.
   /** only caches ipfs translations since saving to a registry would require a
    * long identifier */
-  getTokenLogo = async (token: BraveWallet.BlockchainToken) => {
+  getTokenLogo = (token: BraveWallet.BlockchainToken) => {
     if (isNativeAsset(token)) {
       return makeNativeAssetLogo(token.symbol, token.chainId)
     }
@@ -321,8 +321,7 @@ export class BaseQueryCache {
       // nothing to change
       return token.logo
     }
-
-    return `chrome://erc-token-images/${token.logo}`
+    return token.logo.startsWith('ipfs://') ? '' : `chrome://erc-token-images/${token.logo}`
   }
 
   getEnabledCoinTypes = async () => {
@@ -520,7 +519,7 @@ async function fetchAssetsForNetwork({
     tokens,
     10,
     async (token: BraveWallet.BlockchainToken) => {
-      const tokenLogo = await cache.getTokenLogo(token)
+      const tokenLogo = cache.getTokenLogo(token)
       const updatedToken = addLogoToToken(token, tokenLogo)
       return addChainIdToToken(updatedToken, network.chainId)
     }

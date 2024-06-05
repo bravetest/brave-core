@@ -202,13 +202,9 @@ public class UserAssetsStore: ObservableObject, WalletObserverStore {
     _ asset: BraveWallet.BlockchainToken,
     completion: @escaping (_ success: Bool) -> Void
   ) {
-    if let existedAsset = assetManager.getUserAsset(asset), !existedAsset.isDeletedByUser {
-      completion(false)
-    } else {
-      assetManager.addUserAsset(asset) { [weak self] in
-        self?.update()
-        completion(true)
-      }
+    assetManager.addUserAsset(asset) { [weak self] in
+      self?.update()
+      completion(true)
     }
   }
 

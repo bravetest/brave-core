@@ -240,6 +240,7 @@ public class WalletUserAssetManager: WalletUserAssetManagerType, WalletObserverS
   }
 
   public func addUserAsset(_ asset: BraveWallet.BlockchainToken, completion: (() -> Void)?) {
+    walletService.addUserAsset(token: asset, completion: { _ in })
     if let existedAsset = WalletUserAsset.getUserAsset(asset: asset) {
       if existedAsset.isDeletedByUser {
         // this asset was added before but user marked as deleted after
@@ -271,6 +272,7 @@ public class WalletUserAssetManager: WalletUserAssetManagerType, WalletObserverS
   }
 
   public func removeUserAsset(_ asset: BraveWallet.BlockchainToken, completion: (() -> Void)?) {
+    walletService.removeUserAsset(token: asset, completion: { _ in })
     WalletUserAsset.removeUserAsset(
       asset: asset,
       completion: { [weak self] in
@@ -288,6 +290,14 @@ public class WalletUserAssetManager: WalletUserAssetManagerType, WalletObserverS
     isDeletedByUser: Bool,
     completion: (() -> Void)?
   ) {
+    walletService.userAssets(chainId: asset.chainId, coin: asset.coin) { [weak self] assets in
+      guard let self else { return }
+      if assets.contains(where: { $0.id == asset.id }) {
+        walletService.setUserAssetVisible(token: asset, visible: visible) { _ in }
+      } else {
+        walletService.addUserAsset(token: asset, completion: { _ in })
+      }
+    }
     WalletUserAsset.updateUserAsset(
       for: asset,
       visible: visible,

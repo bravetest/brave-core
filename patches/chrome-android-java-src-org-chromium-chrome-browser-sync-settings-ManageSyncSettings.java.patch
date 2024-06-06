@@ -1,8 +1,8 @@
 diff --git a/chrome/android/java/src/org/chromium/chrome/browser/sync/settings/ManageSyncSettings.java b/chrome/android/java/src/org/chromium/chrome/browser/sync/settings/ManageSyncSettings.java
-index 37fb5b2f1e6fce1fbebe3426aa4d538a056542b9..00d064179be608eb1767c1ee30b62bc298859ab4 100644
+index 0e618ad703cc25dafa68740dbfd1fbdbee15a772..5b58c12416782c730fab8e174aea21602c1f2854 100644
 --- a/chrome/android/java/src/org/chromium/chrome/browser/sync/settings/ManageSyncSettings.java
 +++ b/chrome/android/java/src/org/chromium/chrome/browser/sync/settings/ManageSyncSettings.java
-@@ -55,7 +55,7 @@ import org.chromium.chrome.browser.ui.messages.snackbar.SnackbarManager;
+@@ -56,7 +56,7 @@ import org.chromium.chrome.browser.ui.messages.snackbar.SnackbarManager;
  import org.chromium.chrome.browser.ui.signin.SignOutCoordinator;
  import org.chromium.chrome.browser.ui.signin.SigninUtils;
  import org.chromium.chrome.browser.ui.signin.SignoutButtonPreference;
@@ -11,7 +11,7 @@ index 37fb5b2f1e6fce1fbebe3426aa4d538a056542b9..00d064179be608eb1767c1ee30b62bc2
  import org.chromium.components.browser_ui.settings.ChromeSwitchPreference;
  import org.chromium.components.browser_ui.settings.FragmentSettingsLauncher;
  import org.chromium.components.browser_ui.settings.SettingsLauncher;
-@@ -537,7 +537,7 @@ public class ManageSyncSettings extends ChromeBaseSettingsFragment
+@@ -567,7 +567,7 @@ public class ManageSyncSettings extends ChromeBaseSettingsFragment
                                                  ? ConsentLevel.SIGNIN
                                                  : ConsentLevel.SYNC));
          // May happen if account is removed from the device while this screen is shown.

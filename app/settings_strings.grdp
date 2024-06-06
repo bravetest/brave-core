@@ -3380,12 +3380,6 @@
   <message name="IDS_SETTINGS_TRACKING_PROTECTION_SITES_ALLOWED_COOKIES_DESCRIPTION" desc="Description of the section on the Tracking Protection settings page that lets users manage which sites are allowed to use third-party cookies. Explains how to use a wildcard to create an exception for an entire domain.">
     Affects the sites listed here. Inserting “[*.]” before a domain name creates an exception for the entire domain. For example, adding “[*.]google.com” means that third-party cookies can also be active for mail.google.com, because it’s part of google.com.
   </message>
-  <message name="IDS_SETTINGS_TRACKING_PROTECTION_ROLLBACK_NOTICE" desc="Notice text on the top of the 'Third-party cookies' settings page telling users that Tracking Protection is temporarily unavailable.">
-    Tracking Protection is temporarily unavailable. While Brave is updating this feature, sites can temporarily use third-party cookies unless you block them. <ph name="BEGIN_LINK">&lt;a target="_blank" href="$1" aria-label="$2"&gt;</ph>Learn more<ph name="END_LINK">&lt;/a&gt;<ex>&lt;/a&gt;</ex></ph>
-  </message>
-  <message name="IDS_SETTINGS_TRACKING_PROTECTION_ROLLBACK_NOTICE_LEARN_MORE_ARIA_LABEL" desc="Screenreader text for the 'Learn more' link in the Tracking Protection rollback notice.">
-    Learn more about Tracking Protection availability
-  </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_APP_PROTOCOL_HANDLERS" desc="Label for the app protocol handlers (e.g. mailto) in site settings.">
     Apps
   </message>
@@ -4068,6 +4062,30 @@
   </message>
   <message name="IDS_SETTINGS_PAGE_CONTENT_THINGS_TO_CONSIDER_BULLET_THREE" desc="Bullet point in the 'Things to consider' column of the description of the setting that enables features that provide contextual help for currently opened pages.">
     This setting doesn't change the availability of Brave Translate or Lens
+  </message>
+
+  <!-- History search -->
+  <!-- TODO(b/328300718): Finalize strings. -->
+  <message name="IDS_SETTINGS_HISTORY_SEARCH_SETTING_LABEL" desc="Title of the page of the settings that enables history search." translateable="false">
+    History search
+  </message>
+  <message name="IDS_SETTINGS_HISTORY_SEARCH_SETTING_SUBLABEL" desc="Sublabel of the setting that enables history search." translateable="false">
+    Search through history
+  </message>
+  <message name="IDS_SETTINGS_HISTORY_SEARCH_WHEN_ON_BULLET_ONE" desc="Bullet point in the 'When on' column of the description of the setting that enables history search." translateable="false">
+    You can search through your history
+  </message>
+  <message name="IDS_SETTINGS_HISTORY_SEARCH_CONSIDER_BULLET_ONE" desc="Bullet point in the 'Things to consider' column of the description of the setting that enables history search." translateable="false">
+    You should consider this
+  </message>
+  <message name="IDS_SETTINGS_HISTORY_SEARCH_CONSIDER_BULLET_TWO" desc="Bullet point in the 'Things to consider' column of the description of the setting that enables history search." translateable="false">
+    You should consider this too
+  </message>
+  <message name="IDS_SETTINGS_HISTORY_SEARCH_LEARN_MORE" desc="Footer text for the setting that enables history search that links out to a help article." translateable="false">
+    <ph name="BEGIN_LINK">&lt;a href="$1" target="_blank" aria-label="$2"&gt;</ph>Learn more<ph name="END_LINK">&lt;/a&gt;</ph> about history searches
+  </message>
+  <message name="IDS_SETTINGS_HISTORY_SEARCH_LEARN_MORE_A11Y_LABEL" desc="Label for the 'Learn more' link in the footer text for teh setting that enables history search." translateable="false">
+    Learn more about history searches
   </message>
 
   <!-- Web Content -->

@@ -1,8 +1,8 @@
 diff --git a/chrome/browser/ui/tabs/tab_strip_model.h b/chrome/browser/ui/tabs/tab_strip_model.h
-index d0503950170dacb0b882af3632a5ea40ff1112d6..0b6cd64868f9754a2aa882a67ce92dcb925eb753 100644
+index 342dc703fa4e0cf3745d3b396ee5232f6716dea0..719e5d33b843fdbe7e843e5de2f9dae039454bd4 100644
 --- a/chrome/browser/ui/tabs/tab_strip_model.h
 +++ b/chrome/browser/ui/tabs/tab_strip_model.h
-@@ -659,6 +659,7 @@ class TabStripModel : public TabGroupController {
+@@ -668,6 +668,7 @@ class TabStripModel : public TabGroupController {
    // Serialise this object into a trace.
    void WriteIntoTrace(perfetto::TracedValue context) const;
  

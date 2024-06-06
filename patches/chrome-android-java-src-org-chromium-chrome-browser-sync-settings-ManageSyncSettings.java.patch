@@ -1,5 +1,5 @@
 diff --git a/chrome/android/java/src/org/chromium/chrome/browser/sync/settings/ManageSyncSettings.java b/chrome/android/java/src/org/chromium/chrome/browser/sync/settings/ManageSyncSettings.java
-index 935544db1e161460475fdd967491a9f52f69912d..47de78c630e99666e77140a6fdf808214266220a 100644
+index 5229da639b6a4f08c35690b2713afc73c7a21b92..e593c5f924f432c9af41a13f23ba42e000db8dc6 100644
 --- a/chrome/android/java/src/org/chromium/chrome/browser/sync/settings/ManageSyncSettings.java
 +++ b/chrome/android/java/src/org/chromium/chrome/browser/sync/settings/ManageSyncSettings.java
 @@ -56,7 +56,7 @@ import org.chromium.chrome.browser.ui.messages.snackbar.SnackbarManager;

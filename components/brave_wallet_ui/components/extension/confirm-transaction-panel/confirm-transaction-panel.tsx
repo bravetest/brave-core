@@ -197,9 +197,7 @@ export const ConfirmTransactionPanel = ({
     !fromAccount ||
     !transactionsQueueLength
   ) {
-    return (
-      <LoadingPanel data-testid='confirm-transaction-panel-loading-skeleton' />
-    )
+    return <LoadingPanel />
   }
 
   if (isEditing) {

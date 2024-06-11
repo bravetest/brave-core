@@ -16,4 +16,9 @@
         android:key="private_search_engine"
         android:order="2"
         android:title="@string/prefs_private_search_engine"/>
+
+    <org.chromium.components.browser_ui.settings.ChromeBasePreference
+        android:key="quick_search_engine"
+        android:order="3"
+        android:title="@string/quick_search_engine"/>
 </PreferenceScreen>

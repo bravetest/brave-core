@@ -18,6 +18,7 @@ import org.chromium.components.browser_ui.settings.SettingsUtils;
 public class BraveSearchEnginesPreferences extends BravePreferenceFragment {
     private static final String PREF_STANDARD_SEARCH_ENGINE = "standard_search_engine";
     private static final String PREF_PRIVATE_SEARCH_ENGINE = "private_search_engine";
+    private static final String PREF_QUICK_SEARCH_ENGINE = "quick_search_engine";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

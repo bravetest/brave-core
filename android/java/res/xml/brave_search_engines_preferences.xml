@@ -18,7 +18,8 @@
         android:title="@string/prefs_private_search_engine"/>
 
     <org.chromium.components.browser_ui.settings.ChromeBasePreference
+        android:fragment="org.chromium.chrome.browser.quick_search_engines.settings.QuickSearchFragment"
         android:key="quick_search_engine"
         android:order="3"
-        android:title="@string/quick_search_engine"/>
+        android:title="@string/quick_search_engines"/>
 </PreferenceScreen>

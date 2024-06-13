@@ -139,7 +139,13 @@ class UserScriptManager {
       case .readyStateHelper: return ReadyStateScriptHandler.userScript
       case .youtubeQuality: return YoutubeQualityScriptHandler.userScript
       case .braveLeoAIChat: return BraveLeoScriptHandler.userScript
-      case .braveTranslate: return BraveTranslateScriptHandler.userScript
+      case .braveTranslate:
+        #if compiler(>=6.0)
+        if #available(iOS 18.0, *) {
+          return BraveTranslateScriptHandler.userScript
+        }
+        #endif
+        return nil
       }
     }
 

@@ -1,5 +1,4 @@
 include_rules = [
   "+brave",
   "+chrome",
-  "+components/pref_registry/pref_registry_syncable.h",
 ]

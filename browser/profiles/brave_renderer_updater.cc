@@ -7,6 +7,7 @@
 
 #include <utility>
 
+#include "base/check_is_test.h"
 #include "base/functional/bind.h"
 #include "brave/browser/brave_wallet/brave_wallet_context_utils.h"
 #include "brave/browser/ethereum_remote_client/ethereum_remote_client_constants.h"
@@ -42,6 +43,9 @@ BraveRendererUpdater::BraveRendererUpdater(
     : profile_(profile),
       keyring_service_(keyring_service),
       local_state_(local_state) {
+  if (!local_state_) {
+    CHECK_IS_TEST();
+  }
   PrefService* pref_service = profile->GetPrefs();
   brave_wallet_ethereum_provider_.Init(kDefaultEthereumWallet, pref_service);
   brave_wallet_solana_provider_.Init(kDefaultSolanaWallet, pref_service);
@@ -79,12 +83,14 @@ BraveRendererUpdater::BraveRendererUpdater(
 #endif
 
 #if BUILDFLAG(ENABLE_WIDEVINE)
-  widevine_enabled_.Init(kWidevineEnabled, local_state);
-  local_state_change_registrar_.Init(local_state);
-  local_state_change_registrar_.Add(
-      kWidevineEnabled,
-      base::BindRepeating(&BraveRendererUpdater::UpdateAllRenderers,
-                          base::Unretained(this)));
+  if (local_state) {
+    widevine_enabled_.Init(kWidevineEnabled, local_state);
+    local_state_change_registrar_.Init(local_state);
+    local_state_change_registrar_.Add(
+        kWidevineEnabled,
+        base::BindRepeating(&BraveRendererUpdater::UpdateAllRenderers,
+                            base::Unretained(this)));
+  }
 #endif
 }
 
@@ -212,7 +218,9 @@ void BraveRendererUpdater::UpdateRenderer(
 #endif
   bool widevine_enabled = false;
 #if BUILDFLAG(ENABLE_WIDEVINE)
-  widevine_enabled = local_state_->GetBoolean(kWidevineEnabled);
+  if (local_state_) {
+    widevine_enabled = local_state_->GetBoolean(kWidevineEnabled);
+  }
 #endif
 
   (*renderer_configuration)

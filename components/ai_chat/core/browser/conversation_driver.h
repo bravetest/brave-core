@@ -20,7 +20,6 @@
 #include "base/one_shot_event.h"
 #include "brave/components/ai_chat/core/browser/ai_chat_credential_manager.h"
 #include "brave/components/ai_chat/core/browser/ai_chat_feedback_api.h"
-#include "brave/components/ai_chat/core/browser/ai_chat_keyed_service.h"
 #include "brave/components/ai_chat/core/browser/engine/engine_consumer.h"
 #include "brave/components/ai_chat/core/common/mojom/ai_chat.mojom-forward.h"
 #include "brave/components/ai_chat/core/common/mojom/ai_chat.mojom.h"
@@ -149,7 +148,6 @@ class ConversationDriver {
                     const std::string& rating_id,
                     bool send_hostname,
                     mojom::PageHandler::SendFeedbackCallback callback);
-  void SetService(AIChatKeyedService* service);
 
   // Used to determine whether the page content should be unlinked when
   // triggering from outside of the side panel, such as context menu or
@@ -246,9 +244,6 @@ class ConversationDriver {
   bool IsContentAssociationPossible();
 
   void CleanUp();
-  void CreateAndSyncConversation();
-  void OnGetConversation(std::optional<mojom::ConversationPtr> conversation);
-  void SyncConversationTurn(mojom::ConversationTurnPtr turn);
 
   raw_ptr<PrefService> pref_service_;
   raw_ptr<AIChatMetrics> ai_chat_metrics_;
@@ -263,8 +258,6 @@ class ConversationDriver {
   // TODO(nullhook): Abstract the data model
   std::string model_key_;
   std::vector<mojom::ConversationTurnPtr> chat_history_;
-  mojom::ConversationPtr conversation_;
-
   bool is_conversation_active_ = false;
 
   // Page content
@@ -294,8 +287,6 @@ class ConversationDriver {
   mojom::PremiumStatus last_premium_status_ = mojom::PremiumStatus::Unknown;
 
   mojom::ConversationTurnPtr pending_conversation_entry_;
-
-  raw_ptr<AIChatKeyedService> service_ = nullptr;
 
   base::WeakPtrFactory<ConversationDriver> weak_ptr_factory_{this};
 };

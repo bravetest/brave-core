@@ -8,13 +8,13 @@
 #include "brave/common/brave_content_client.h"
 #include "brave/common/resource_bundle_helper.h"
 #include "brave/test/base/testing_brave_browser_process.h"
-#include "chrome/browser/profiles/profile_shortcut_manager.h"
+#include "ui/base/resource/resource_bundle.h"
 
-#define DisableForUnitTests \
-  DisableForUnitTests();    \
-  brave::InitializeResourceBundle
+#define InitSharedInstanceWithLocale(...)    \
+  InitSharedInstanceWithLocale(__VA_ARGS__); \
+  brave::InitializeResourceBundle();
 
 #define ChromeContentClient BraveContentClient
 #include "src/chrome/test/base/chrome_unit_test_suite.cc"
 #undef ChromeContentClient
-#undef DisableForUnitTests
+#undef InitSharedInstanceWithLocale

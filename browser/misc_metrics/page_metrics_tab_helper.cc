@@ -5,6 +5,7 @@
 
 #include "brave/browser/misc_metrics/page_metrics_tab_helper.h"
 
+#include "base/check_is_test.h"
 #include "brave/browser/misc_metrics/profile_misc_metrics_service.h"
 #include "brave/browser/misc_metrics/profile_misc_metrics_service_factory.h"
 #include "brave/components/misc_metrics/page_metrics.h"
@@ -26,6 +27,9 @@ PageMetricsTabHelper::PageMetricsTabHelper(content::WebContents* web_contents)
   page_metrics_ = ProfileMiscMetricsServiceFactory::GetServiceForContext(
                       web_contents->GetBrowserContext())
                       ->GetPageMetrics();
+  if (!page_metrics_) {
+    CHECK_IS_TEST();
+  }
 }
 
 PageMetricsTabHelper::~PageMetricsTabHelper() = default;

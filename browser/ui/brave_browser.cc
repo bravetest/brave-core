@@ -9,6 +9,7 @@
 #include <optional>
 #include <utility>
 
+#include "base/check_is_test.h"
 #include "base/feature_list.h"
 #include "base/functional/bind.h"
 #include "base/functional/callback_helpers.h"
@@ -86,8 +87,12 @@ void BraveBrowser::ScheduleUIUpdate(content::WebContents* source,
   if (changed_flags & content::INVALIDATE_TYPE_URL) {
     if (source == tab_strip_model_->GetActiveWebContents()) {
       // sidebar() can return a nullptr in unit tests.
-      if (sidebar_controller_ && sidebar_controller_->sidebar()) {
-        sidebar_controller_->sidebar()->UpdateSidebarItemsState();
+      if (sidebar_controller_) {
+        if (sidebar_controller_->sidebar()) {
+          sidebar_controller_->sidebar()->UpdateSidebarItemsState();
+        } else {
+          CHECK_IS_TEST();
+        }
       }
     }
   }

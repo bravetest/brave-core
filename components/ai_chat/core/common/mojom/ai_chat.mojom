@@ -213,6 +213,7 @@ struct ConversationEntry {
   ActionType action_type;
   string? selected_text;
   array<ConversationEntryText> texts;
+  array<ConversationEntryEvent>? events;
 };
 
 struct ConversationEntryText {

@@ -5,6 +5,9 @@
 
 #include "brave/components/ai_chat/core/browser/utils.h"
 
+#include <utility>
+#include <vector>
+
 #include "base/functional/bind.h"
 #include "base/strings/string_util.h"
 #include "base/task/bind_post_task.h"

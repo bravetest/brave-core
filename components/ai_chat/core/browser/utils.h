@@ -6,6 +6,8 @@
 #ifndef BRAVE_COMPONENTS_AI_CHAT_CORE_BROWSER_UTILS_H_
 #define BRAVE_COMPONENTS_AI_CHAT_CORE_BROWSER_UTILS_H_
 
+#include <string>
+
 #include "base/functional/callback_forward.h"
 #include "brave/components/text_recognition/common/buildflags/buildflags.h"
 #include "third_party/skia/include/core/SkBitmap.h"

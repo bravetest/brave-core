@@ -91,8 +91,7 @@ void ResetBadModelKeys(PrefService* prefs) {
 
   if (default_model_value &&
       GetModel(default_model_value->GetString()) == nullptr) {
-    prefs->SetString(prefs::kDefaultModelKey,
-                     features::kAIModelsDefaultKey.Get());
+    prefs->ClearPref(prefs::kDefaultModelKey);
   }
 }
 

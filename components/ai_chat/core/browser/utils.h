@@ -18,6 +18,7 @@ namespace ai_chat {
 bool IsAIChatEnabled(PrefService* prefs);
 bool HasUserOptedIn(PrefService* prefs);
 void SetUserOptedIn(PrefService* prefs, bool opted_in);
+void ResetBadModelKeys(PrefService* prefs);
 
 #if BUILDFLAG(ENABLE_TEXT_RECOGNITION)
 using GetOCRTextCallback = base::OnceCallback<void(std::string)>;

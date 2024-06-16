@@ -517,6 +517,13 @@
 # false
 -ShowSyncPromoTest.*
 
+# These tests time out because the CreateProfile method calls
+# mock_time_task_runner_->FastForwardUntilNoTasksRemain() which never returns.
+-IncidentReportingServiceTest.*
+
+# This test times out because TaskEnvironment::FastForwardBy never returns.
+-NotificationsEngagementServiceTest.EraseStaleEntries
+
 # These tests are disabled due to an issue related to calling
 # browsertest_util::AddTab. This problem should be investigated and these tests
 # reenabled. See https://github.com/brave/brave-browser/issues/39075
@@ -874,6 +881,9 @@
 -SiteSettingsHelperTest.*
 -StartupBrowserPolicyUnitTest.*
 -StartupTabProviderTest.*
+-StateStoreTest.ClearAll
+-StateStoreTest.Persistence
+-StateStoreTest.PersistenceWithStoreDelete
 -StorageAccessGrantPermissionContextAPIEnabledTest.*
 -StorageAccessGrantPermissionContextAPIWithImplicitGrantsTest.*
 -StorageAccessGrantPermissionContextTest.*

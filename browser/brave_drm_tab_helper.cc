@@ -20,6 +20,7 @@
 #include "content/public/browser/navigation_handle.h"
 
 #if !BUILDFLAG(IS_ANDROID)
+#include "base/check_is_test.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
@@ -55,8 +56,12 @@ BraveDrmTabHelper::BraveDrmTabHelper(content::WebContents* contents)
   auto* updater = g_browser_process->component_updater();
   // We don't need to observe if widevine is already registered.
   // component_updater() can return nullptr in unit tests.
-  if (updater && !IsAlreadyRegistered(updater)) {
-    observer_.Observe(updater);
+  if (updater) {
+    if (!IsAlreadyRegistered(updater)) {
+      observer_.Observe(updater);
+    }
+  } else {
+    CHECK_IS_TEST();
   }
 #endif
 }

@@ -43,9 +43,6 @@ BraveRendererUpdater::BraveRendererUpdater(
     : profile_(profile),
       keyring_service_(keyring_service),
       local_state_(local_state) {
-  if (!local_state_) {
-    CHECK_IS_TEST();
-  }
   PrefService* pref_service = profile->GetPrefs();
   brave_wallet_ethereum_provider_.Init(kDefaultEthereumWallet, pref_service);
   brave_wallet_solana_provider_.Init(kDefaultSolanaWallet, pref_service);
@@ -83,13 +80,15 @@ BraveRendererUpdater::BraveRendererUpdater(
 #endif
 
 #if BUILDFLAG(ENABLE_WIDEVINE)
-  if (local_state) {
-    widevine_enabled_.Init(kWidevineEnabled, local_state);
-    local_state_change_registrar_.Init(local_state);
+  if (local_state_) {
+    widevine_enabled_.Init(kWidevineEnabled, local_state_);
+    local_state_change_registrar_.Init(local_state_);
     local_state_change_registrar_.Add(
         kWidevineEnabled,
         base::BindRepeating(&BraveRendererUpdater::UpdateAllRenderers,
                             base::Unretained(this)));
+  } else {
+    CHECK_IS_TEST();
   }
 #endif
 }
@@ -220,6 +219,8 @@ void BraveRendererUpdater::UpdateRenderer(
 #if BUILDFLAG(ENABLE_WIDEVINE)
   if (local_state_) {
     widevine_enabled = local_state_->GetBoolean(kWidevineEnabled);
+  } else {
+    CHECK_IS_TEST();
   }
 #endif
 

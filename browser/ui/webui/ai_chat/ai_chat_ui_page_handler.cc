@@ -506,4 +506,11 @@ void AIChatUIPageHandler::OnGetPremiumStatus(
   }
 }
 
+void AIChatUIPageHandler::ModifyConversation(uint32_t turn_index,
+                                             const std::string& new_text) {
+  if (active_chat_tab_helper_) {
+    active_chat_tab_helper_->ModifyConversation(turn_index, new_text);
+  }
+}
+
 }  // namespace ai_chat

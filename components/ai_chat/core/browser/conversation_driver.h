@@ -139,6 +139,8 @@ class ConversationDriver {
       GeneratedTextCallback received_callback,
       EngineConsumer::GenerationCompletedCallback completed_callback);
 
+  void ModifyConversation(uint32_t turn_index, const std::string& new_text);
+
   void RateMessage(bool is_liked,
                    uint32_t turn_id,
                    mojom::PageHandler::RateMessageCallback callback);

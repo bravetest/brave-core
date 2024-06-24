@@ -124,6 +124,13 @@ union ConversationEntryEvent {
   SearchStatusEvent search_status_event;
 };
 
+struct EditEntry {
+  string text;
+  mojo_base.mojom.Time timestamp;
+  // TODO(jocelyn): what to do with selected_text?
+  // string? selected_text;
+};
+
 // Represents a single turn in a conversation.
 // The character type defines which party initiated the turn in the
 // conversation.
@@ -147,6 +154,9 @@ struct ConversationTurn {
   // to be an event - as the events become richer, the order around text could
   // be important.
   array<ConversationEntryEvent>? events;
+
+//   mojo_base.mojom.Time? edit_timestamp;
+//   array<EditEntry> edits;
 };
 
 // Represents an AI engine model choice, usually for the user to choose for a
@@ -249,6 +259,7 @@ interface PageHandler {
   ClosePanel();
   GetActionMenuList() => (array<ActionGroup> action_list);
   OpenModelSupportUrl();
+  ModifyConversation(uint32 turn_index, string new_text);
 };
 
 interface ChatUIPage {

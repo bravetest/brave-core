@@ -1279,4 +1279,24 @@ void ConversationDriver::SendFeedback(
                               std::move(on_complete));
 }
 
+void ConversationDriver::ModifyConversation(uint32_t turn_index,
+                                            const std::string& new_text) {
+  if (turn_index >= chat_history_.size()) {
+    return;
+  }
+
+  auto& turn = chat_history_.at(turn_index);
+  turn->text = new_text;
+
+  if (turn->character_type == CharacterType::HUMAN) {
+    // Modifying human turn, drop anything after this turn_index and resubmit.
+    auto new_turn = std::move(chat_history_.at(turn_index));
+    chat_history_.erase(chat_history_.begin() + turn_index,
+                        chat_history_.end());
+    SubmitHumanConversationEntry(std::move(new_turn));
+  } else {
+    engine_->SanitizeInput(turn->text);
+  }
+}
+
 }  // namespace ai_chat

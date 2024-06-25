@@ -4,10 +4,34 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 import Foundation
+import UIKit
 
 class URLBarHelper {
 
   static let shared = URLBarHelper()
+
+  func shouldShowSearchSuggestions(using lastReplacement: String) -> Bool {
+    // Check if last entry to url textfield needs to be checked as suspicious.
+    // The reason of checking count is bigger than 1 is the single character
+    // entries will always be safe and only way to achieve multi character entry is
+    // using paste board.
+    // This check also allow us to handle paste permission case
+    guard lastReplacement.count > 1 else {
+      return true
+    }
+
+    // Check if paste board has any text to guarantee the case
+    guard UIPasteboard.general.hasStrings || UIPasteboard.general.hasURLs else {
+      return true
+    }
+
+    // Perform check on pasted text
+    if let pasteboardContents = UIPasteboard.general.string {
+      return !isSuspiciousQuery(pasteboardContents)
+    }
+
+    return true
+  }
 
   /// Whether  the desired text should allow search suggestions to appear when it is copied
   /// - Parameter query: Search query copied
@@ -78,7 +102,7 @@ class URLBarHelper {
     return false
   }
 
-  func checkForLongNumber(_ str: String, _ maxNumberLength: Int) -> String? {
+  private func checkForLongNumber(_ str: String, _ maxNumberLength: Int) -> String? {
     let controlString = str.replacingOccurrences(
       of: "[^A-Za-z0-9]",
       with: "",
@@ -117,7 +141,7 @@ class URLBarHelper {
     }
   }
 
-  func checkForEmail(_ str: String) -> Bool {
+  private func checkForEmail(_ str: String) -> Bool {
     let emailPattern = "[a-z0-9\\-_@]+(@|%40|%(25)+40)[a-z0-9\\-_]+\\.[a-z0-9\\-_]"
 
     guard
@@ -130,7 +154,7 @@ class URLBarHelper {
     return emailRegex.firstMatch(in: str, options: [], range: range) != nil
   }
 
-  func isHashProb(_ str: String) -> Double {
+  private func isHashProb(_ str: String) -> Double {
     var logProb = 0.0
     var transC = 0
     let filteredStr = str.replacingOccurrences(

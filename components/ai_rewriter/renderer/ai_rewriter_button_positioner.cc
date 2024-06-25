@@ -14,11 +14,13 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_frame_observer.h"
+#include "third_party/blink/public/mojom/page/display_cutout.mojom.h"
 #include "third_party/blink/public/web/web_document.h"
 #include "third_party/blink/public/web/web_dom_event.h"
 #include "third_party/blink/public/web/web_element.h"
 #include "third_party/blink/public/web/web_local_frame.h"
 #include "third_party/blink/public/web/web_node.h"
+#include "third_party/blink/public/web/web_range.h"
 #include "third_party/blink/renderer/core/dom/document.h"
 #include "third_party/blink/renderer/core/dom/events/event.h"
 #include "third_party/blink/renderer/core/dom/events/event_target.h"
@@ -65,9 +67,7 @@ AIRewriterButtonPositioner::AIRewriterButtonPositioner(
     content::RenderFrame* frame)
     : content::RenderFrameObserver(frame) {}
 
-AIRewriterButtonPositioner::~AIRewriterButtonPositioner() {
-  LOG(ERROR) << " Destroyed button listener";
-}
+AIRewriterButtonPositioner::~AIRewriterButtonPositioner() = default;
 
 void AIRewriterButtonPositioner::OnDestruct() {
   delete this;
@@ -78,20 +78,27 @@ void AIRewriterButtonPositioner::DidCreateDocumentElement() {
   CHECK(!document.IsNull());
   remove_listener_ = document.AddEventListener(
       blink::WebNode::EventType::kSelectionchange,
-      base::BindRepeating(
-          [](blink::WebDocument document, blink::WebDOMEvent event) {
-            if (document.IsNull()) {
-              return;
-            }
+      base::BindRepeating(&AIRewriterButtonPositioner::UpdateButton,
+                          weak_ptr_factory_.GetWeakPtr(), document));
+}
 
-            ;
-            LOG(ERROR) << "Selection changed: "
-                       << document.GetFrame()
-                              ->GetSelectionBoundsRectForTesting()
-                              .ToString();
-          },
-          document));
-  LOG(ERROR) << "Created button positioner!";
+void AIRewriterButtonPositioner::UpdateButton(blink::WebDocument document,
+                                              blink::WebDOMEvent event) {
+  if (document.IsNull()) {
+    return;
+  }
+
+  auto* frame = document.GetFrame();
+  auto selection = frame->SelectionRange();
+
+  if (selection.length() < 2) {
+    // Hide button, not much is selected
+    LOG(ERROR) << "Hiding";
+    return;
+  }
+
+  auto bounds = frame->GetSelectionBoundsRectForTesting();
+  LOG(ERROR) << "Showing: " << bounds.ToString();
 }
 
 }  // namespace ai_rewriter

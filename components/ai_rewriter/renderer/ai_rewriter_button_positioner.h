@@ -8,6 +8,7 @@
 
 #include "base/component_export.h"
 #include "base/functional/callback_helpers.h"
+#include "base/memory/weak_ptr.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "third_party/blink/public/web/web_element.h"
 
@@ -32,7 +33,10 @@ class COMPONENT_EXPORT(AI_REWRITER_RENDERER) AIRewriterButtonPositioner
   void OnDestruct() override;
 
  private:
+  void UpdateButton(blink::WebDocument document, blink::WebDOMEvent event);
+
   base::ScopedClosureRunner remove_listener_;
+  base::WeakPtrFactory<AIRewriterButtonPositioner> weak_ptr_factory_{this};
 };
 
 }  // namespace ai_rewriter

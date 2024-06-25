@@ -1286,17 +1286,21 @@ void ConversationDriver::ModifyConversation(uint32_t turn_index,
   }
 
   auto& turn = chat_history_.at(turn_index);
-  turn->text = new_text;
-
-  if (turn->character_type == CharacterType::HUMAN) {
-    // Modifying human turn, drop anything after this turn_index and resubmit.
-    auto new_turn = std::move(chat_history_.at(turn_index));
-    chat_history_.erase(chat_history_.begin() + turn_index,
-                        chat_history_.end());
-    SubmitHumanConversationEntry(std::move(new_turn));
-  } else {
-    engine_->SanitizeInput(turn->text);
+  if (turn->character_type == CharacterType::ASSISTANT) {  // not supported yet
+    return;
   }
+
+  // turn->edits.push_back(
+  //     mojom::EditEntry::New(turn->text, turn->last_edited_time));
+  turn->text = new_text;
+  // engine_->SanitizeInput(turn->text);
+  // turn->last_edited_time = base::Time::Now();
+
+  // Modifying human turn, drop anything after this turn_index and resubmit.
+  auto new_turn = std::move(chat_history_.at(turn_index));
+  chat_history_.erase(chat_history_.begin() + turn_index,
+      chat_history_.end());
+  SubmitHumanConversationEntry(std::move(new_turn));
 }
 
 }  // namespace ai_chat

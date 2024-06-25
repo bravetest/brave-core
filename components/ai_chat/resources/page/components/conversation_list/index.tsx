@@ -19,6 +19,8 @@ import LongPageInfo from '../alerts/long_page_info'
 import AssistantResponse from '../assistant_response'
 import styles from './style.module.scss'
 import CopyButton from '../copy_button'
+import EditButton from '../edit_button'
+import EditInput from '../edit_input'
 
 const SUGGESTION_STATUS_SHOW_BUTTON: mojom.SuggestionGenerationStatus[] = [
   mojom.SuggestionGenerationStatus.CanGenerate,
@@ -53,6 +55,12 @@ function ConversationList(props: ConversationListProps) {
 
   const lastEntryElementRef = React.useRef<HTMLDivElement>(null)
   const [activeMenuId, setActiveMenuId] = React.useState<number | null>()
+  const [showEditInput, setShowEditInput] = React.useState<boolean>(false)
+
+  const handleEditSubmit = (index: number, text: string) => {
+    getPageHandlerInstance().pageHandler.modifyConversation(index, text)
+    setShowEditInput(false)
+  }
 
   const showAssistantMenu = (id: number) => {
     setActiveMenuId(id)
@@ -121,9 +129,13 @@ function ConversationList(props: ConversationListProps) {
           })
 
           const handleCopyText = () => {
-            const event = turn.events?.find((event) => event.completionEvent)
-            if (!event?.completionEvent) return
-            navigator.clipboard.writeText(event.completionEvent.completion)
+            if (isAIAssistant) {
+              const event = turn.events?.find((event) => event.completionEvent)
+              if (!event?.completionEvent) return
+              navigator.clipboard.writeText(event.completionEvent.completion)
+            } else {
+              navigator.clipboard.writeText(turn.text)
+            }
           }
 
           return (
@@ -149,9 +161,12 @@ function ConversationList(props: ConversationListProps) {
                     </div>
                     <span>{isHuman ? 'You' : 'Leo'}</span>
                   </div>
+                  <div className={styles.turnActions}>
+                    <CopyButton onClick={handleCopyText} />
+                  {!isAIAssistant && (
+                    <EditButton onClick={() => setShowEditInput(true)} />
+                  )}
                   {isAIAssistant && (
-                    <div className={styles.turnActions}>
-                      <CopyButton onClick={handleCopyText} />
                       <ContextMenuAssistant
                         ref={portalRefs}
                         turnId={id}
@@ -159,8 +174,8 @@ function ConversationList(props: ConversationListProps) {
                         onClick={() => showAssistantMenu(id)}
                         onClose={hideAssistantMenu}
                       />
-                    </div>
                   )}
+                  </div>
                 </div>
                 <div className={styles.message}>
                   {isAIAssistant && (
@@ -169,7 +184,14 @@ function ConversationList(props: ConversationListProps) {
                       isEntryInProgress={isEntryInProgress}
                     />
                   )}
-                  {!isAIAssistant && !turn.selectedText && turn.text}
+                  {!isAIAssistant && !turn.selectedText && !showEditInput && turn.text}
+                  {!isAIAssistant && !turn.selectedText && showEditInput && (
+                    <EditInput
+                      text={turn.text}
+                      onSubmit={(text) => handleEditSubmit(id, text)}
+                      onCancel={() => setShowEditInput(false)}
+                    />
+                  )}
                   {turn.selectedText && (
                     <ActionTypeLabel actionType={turn.actionType} />
                   )}

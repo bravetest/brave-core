@@ -1,0 +1,62 @@
+// Copyright (c) 2024 The Brave Authors. All rights reserved.
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this file,
+// you can obtain one at https://mozilla.org/MPL/2.0/.
+
+.content {
+  display: flex;
+  max-width: 680px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8px;
+
+  flex: 1 0 0;
+}
+
+.textareaContainer {
+  border-radius: var(--leo-radius-m);
+  border: 1px solid var(--leo-color-divider-strong);
+  background: var(--leo-color-container-background);
+  display: flex;
+  padding: 11px var(--leo-spacing-m);
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--leo-spacing-m);
+  align-self: stretch;
+
+  textarea {
+    width: 100%;
+    resize: none;
+    // color: var(--leo-color-text-primary);
+    background-color: transparent;
+    border: 0;
+    overflow: hidden;
+    padding-right: 30px;
+
+    &:focus { outline: none; }
+  }
+
+  button {
+    align-items: flex-end;
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-end;
+
+  button {
+    height: 36px;
+    min-height: 36px;
+    padding: var(--leo-spacing-m) var(--leo-spacing-l);
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--leo-radius-l);
+    width: auto;
+    flex: none;
+  }
+}

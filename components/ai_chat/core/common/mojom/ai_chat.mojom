@@ -155,7 +155,7 @@ struct ConversationTurn {
   // be important.
   array<ConversationEntryEvent>? events;
 
-//   mojo_base.mojom.Time? edit_timestamp;
+//   mojo_base.mojom.Time last_edited_time;
 //   array<EditEntry> edits;
 };
 

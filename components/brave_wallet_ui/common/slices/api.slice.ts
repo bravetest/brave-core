@@ -48,6 +48,7 @@ import { transactionEndpoints } from './endpoints/transaction.endpoints'
 import { swapEndpoints } from './endpoints/swap.endpoints'
 import { encryptionEndpoints } from './endpoints/encryption.endpoints'
 import { signingEndpoints } from './endpoints/signing.endpoints'
+import { meldIntegrationEndpoints } from './endpoints/meld_integration.endpoints'
 
 export function createWalletApi() {
   // base to add endpoints to
@@ -154,6 +155,8 @@ export function createWalletApi() {
       .injectEndpoints({ endpoints: encryptionEndpoints })
       // Message Signing endpoints
       .injectEndpoints({ endpoints: signingEndpoints })
+      // meld integration endpoints
+      .injectEndpoints({ endpoints: meldIntegrationEndpoints })
   )
 }
 
@@ -344,7 +347,12 @@ export const {
   useUpdateUnapprovedTransactionSpendAllowanceMutation,
   useUpdateUserAssetVisibleMutation,
   useUpdateUserTokenMutation,
-  useValidateUnifiedAddressQuery
+  useValidateUnifiedAddressQuery,
+  useGetMeldFiatCurrenciesQuery,
+  useGetMeldCryptoCurrenciesQuery,
+  useGetDefaultCountryQuery,
+  useGetMeldCountriesQuery,
+  useGenerateMeldCryptoQuotesMutation,
 } = walletApi
 
 // Derived Data Queries

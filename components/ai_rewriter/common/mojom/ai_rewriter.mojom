@@ -19,7 +19,7 @@ interface AIRewriterButton {
 
   // Hides the AIRewriter Button
   Hide();
-}
+};
 
 interface AIRewriterPage {
   OnUpdatedGeneratedText(string generate_text);

@@ -868,6 +868,7 @@ source_set("ui") {
     ]
 
     deps += [
+      "//brave/browser/ui/views/ai_rewriter",
       "//brave/browser/ui/views/brave_ads",
       "//brave/browser/ui/views/brave_tooltips",
       "//ui/views/controls/webview",

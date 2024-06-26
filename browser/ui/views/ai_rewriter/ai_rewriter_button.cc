@@ -1,0 +1,80 @@
+// Copyright (c) 2024 The Brave Authors. All rights reserved.
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this file,
+// You can obtain one at https://mozilla.org/MPL/2.0/.
+
+#include "brave/browser/ui/views/ai_rewriter/ai_rewriter_button.h"
+
+#include <memory>
+
+#include "base/functional/bind.h"
+#include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/browser_window.h"
+#include "ui/base/metadata/metadata_impl_macros.h"
+#include "ui/gfx/geometry/rect.h"
+#include "ui/gfx/geometry/rect_f.h"
+#include "ui/gfx/geometry/size.h"
+#include "ui/gfx/native_widget_types.h"
+#include "ui/views/controls/button/md_text_button.h"
+#include "ui/views/layout/flex_layout.h"
+#include "ui/views/layout/layout_types.h"
+#include "ui/views/metadata/view_factory.h"
+#include "ui/views/widget/widget.h"
+#include "util/basictypes.h"
+
+namespace ai_rewriter {
+
+AIRewriterButton::AIRewriterButton() {
+  auto layout = std::make_unique<views::FlexLayout>();
+  layout->SetCrossAxisAlignment(views::LayoutAlignment::kStretch)
+      .SetMainAxisAlignment(views::LayoutAlignment::kStretch);
+
+  views::Builder<AIRewriterButton>(this)
+      .SetPreferredSize(gfx::Size(100, 100))
+      .SetLayoutManager(std::move(layout))
+      .AddChild(
+          views::Builder<views::MdTextButton>()
+              .SetText(u"Rewrite")
+              .SetCallback(base::BindRepeating(&AIRewriterButton::OpenDialog,
+                                               base::Unretained(this))));
+}
+AIRewriterButton::~AIRewriterButton() = default;
+
+void AIRewriterButton::CreateButton(content::WebContents* contents) {
+  auto* button = new AIRewriterButton();
+
+  auto* browser = chrome::FindBrowserWithTab(contents);
+  CHECK(browser);
+
+  auto* parent_widget = views::Widget::GetWidgetForNativeWindow(
+      browser->window()->GetNativeWindow());
+  CHECK(parent_widget);
+
+  views::Widget::InitParams params(
+      views::Widget::InitParams::Type::TYPE_CONTROL);
+  params.parent = parent_widget->GetNativeView();
+  params.activatable = views::Widget::InitParams::Activatable::kYes;
+  params.delegate = button;
+
+  auto* widget = new views::Widget();
+  widget->Init(std::move(params));
+  widget->SetBounds(gfx::Rect(100, 100, 100, 100));
+}
+
+void AIRewriterButton::Show(const gfx::RectF& rect) {
+  GetWidget()->Show();
+}
+
+void AIRewriterButton::Hide() {
+  GetWidget()->Hide();
+}
+
+void AIRewriterButton::OpenDialog() {
+  LOG(ERROR) << "Open Dialog";
+}
+
+BEGIN_METADATA(AIRewriterButton)
+END_METADATA
+
+}  // namespace ai_rewriter

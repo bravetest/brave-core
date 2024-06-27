@@ -15,7 +15,7 @@ interface AIRewriterAgent {
 interface AIRewriterButton {
   // Shows the Button at a specific location. If already showing, the button
   // will be moved.
-  Show(gfx.mojom.RectF rect);
+  Show(gfx.mojom.Rect rect);
 
   // Hides the AIRewriter Button
   Hide();

@@ -5,6 +5,8 @@
 
 #include "brave/browser/ai_rewriter/ai_rewriter_tab_helper.h"
 
+#include "brave/browser/ui/views/ai_rewriter/ai_rewriter_button.h"
+#include "content/public/browser/page.h"
 #include "content/public/browser/visibility.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -26,12 +28,25 @@ void AIRewriterTabHelper::OnVisibilityChanged(content::Visibility visibility) {
   }
 }
 
-void AIRewriterTabHelper::Hide() {
-  LOG(ERROR) << "Hiding";
+void AIRewriterTabHelper::PrimaryPageChanged(content::Page& page) {
+  
 }
 
-void AIRewriterTabHelper::Show(const gfx::RectF& rect) {
-  LOG(ERROR) << "Showing at: " << rect.ToString();
+void AIRewriterTabHelper::Hide() {
+  GetButton()->Hide();
+}
+
+void AIRewriterTabHelper::Show(const gfx::Rect& rect) {
+  GetButton()->Show(rect);
+}
+
+ai_rewriter::AIRewriterButton* AIRewriterTabHelper::GetButton() {
+  if (!button_) {
+    button_ = ai_rewriter::AIRewriterButton::CreateButton(web_contents());
+    CHECK(button_);
+  }
+
+  return button_;
 }
 
 WEB_CONTENTS_USER_DATA_KEY_IMPL(AIRewriterTabHelper);

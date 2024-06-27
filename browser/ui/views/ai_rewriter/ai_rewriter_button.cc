@@ -8,9 +8,13 @@
 #include <memory>
 
 #include "base/functional/bind.h"
+#include "brave/browser/ui/ai_rewriter/ai_rewriter_dialog_delegate.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_window.h"
+#include "content/public/browser/page.h"
+#include "content/public/browser/web_contents.h"
+#include "content/public/browser/web_contents_observer.h"
 #include "include/core/SkColor.h"
 #include "ui/base/metadata/metadata_impl_macros.h"
 #include "ui/gfx/geometry/point.h"
@@ -29,7 +33,8 @@
 
 namespace ai_rewriter {
 
-AIRewriterButton::AIRewriterButton() {
+AIRewriterButton::AIRewriterButton(content::WebContents* contents)
+    : content::WebContentsObserver(contents) {
   views::Builder<AIRewriterButton>(this)
       .SetLayoutManager(std::make_unique<views::FillLayout>())
       .AddChild(views::Builder<views::MdTextButton>()
@@ -40,8 +45,9 @@ AIRewriterButton::AIRewriterButton() {
 }
 AIRewriterButton::~AIRewriterButton() = default;
 
-void AIRewriterButton::CreateButton(content::WebContents* contents) {
-  auto* button = new AIRewriterButton();
+AIRewriterButton* AIRewriterButton::CreateButton(
+    content::WebContents* contents) {
+  auto* button = new AIRewriterButton(contents);
 
   auto* browser = chrome::FindBrowserWithTab(contents);
   CHECK(browser);
@@ -53,19 +59,24 @@ void AIRewriterButton::CreateButton(content::WebContents* contents) {
   views::Widget::InitParams params(
       views::Widget::InitParams::Type::TYPE_CONTROL);
   params.parent = parent_widget->GetNativeView();
-  params.activatable = views::Widget::InitParams::Activatable::kNo;
+  params.activatable = views::Widget::InitParams::Activatable::kYes;
   params.delegate = button;
-
   auto* widget = new views::Widget();
   widget->Init(std::move(params));
   widget->SetBounds(
       gfx::Rect(gfx::Point(100, 100), button->GetPreferredSize()));
 
-  widget->Show();
+  return button;
 }
 
-void AIRewriterButton::Show(const gfx::RectF& rect) {
+void AIRewriterButton::Show(const gfx::Rect& rect) {
+  CHECK(GetWidget());
   GetWidget()->Show();
+
+  auto size = GetPreferredSize();
+  auto pos = rect.top_right();
+  pos.Offset(size.width(), -size.height());
+  GetWidget()->SetBounds(gfx::Rect(pos, size));
 }
 
 void AIRewriterButton::Hide() {
@@ -74,6 +85,14 @@ void AIRewriterButton::Hide() {
 
 void AIRewriterButton::OpenDialog() {
   LOG(ERROR) << "Open Dialog";
+}
+
+void AIRewriterButton::PrimaryPageChanged(content::Page& page) {
+  Hide();
+}
+
+void AIRewriterButton::WebContentsDestroyed() {
+  GetWidget()->Close();
 }
 
 BEGIN_METADATA(AIRewriterButton)

@@ -7,6 +7,8 @@
 #define BRAVE_BROWSER_AI_REWRITER_AI_REWRITER_TAB_HELPER_H_
 
 #include <optional>
+
+#include "brave/browser/ui/views/ai_rewriter/ai_rewriter_button.h"
 #include "brave/components/ai_rewriter/common/mojom/ai_rewriter.mojom.h"
 #include "content/public/browser/visibility.h"
 #include "content/public/browser/web_contents.h"
@@ -14,6 +16,7 @@
 #include "content/public/browser/web_contents_user_data.h"
 #include "mojo/public/cpp/bindings/pending_receiver.h"
 #include "mojo/public/cpp/bindings/receiver_set.h"
+#include "partition_alloc/pointers/raw_ptr.h"
 #include "ui/gfx/geometry/rect_f.h"
 
 namespace ai_rewriter {
@@ -24,7 +27,7 @@ class AIRewriterTabHelper
  public:
   AIRewriterTabHelper(const AIRewriterTabHelper&) = delete;
   AIRewriterTabHelper& operator=(const AIRewriterTabHelper&) = delete;
-  ~AIRewriterTabHelper();
+  ~AIRewriterTabHelper() override;
 
   void Bind(mojo::PendingReceiver<mojom::AIRewriterButton> receiver);
 
@@ -34,7 +37,7 @@ class AIRewriterTabHelper
 
   // mojom::AIRewriterButton:
   void Hide() override;
-  void Show(const gfx::RectF& rect) override;
+  void Show(const gfx::Rect& rect) override;
 
  private:
   struct BindingContext {
@@ -43,6 +46,9 @@ class AIRewriterTabHelper
   };
   explicit AIRewriterTabHelper(content::WebContents* contents);
 
+  ai_rewriter::AIRewriterButton* GetButton();
+
+  raw_ptr<ai_rewriter::AIRewriterButton> button_;
   mojo::ReceiverSet<mojom::AIRewriterButton, BindingContext> receivers_;
 
   friend WebContentsUserData;

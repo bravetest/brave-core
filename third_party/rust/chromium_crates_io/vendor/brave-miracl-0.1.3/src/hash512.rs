@@ -17,16 +17,16 @@
  * limitations under the License.
  */
 
-const HASH384_H0: u64 = 0xcbbb9d5dc1059ed8;
-const HASH384_H1: u64 = 0x629a292a367cd507;
-const HASH384_H2: u64 = 0x9159015a3070dd17;
-const HASH384_H3: u64 = 0x152fecd8f70e5939;
-const HASH384_H4: u64 = 0x67332667ffc00b31;
-const HASH384_H5: u64 = 0x8eb44a8768581511;
-const HASH384_H6: u64 = 0xdb0c2e0d64f98fa7;
-const HASH384_H7: u64 = 0x47b5481dbefa4fa4;
+const HASH512_H0: u64 = 0x6a09e667f3bcc908;
+const HASH512_H1: u64 = 0xbb67ae8584caa73b;
+const HASH512_H2: u64 = 0x3c6ef372fe94f82b;
+const HASH512_H3: u64 = 0xa54ff53a5f1d36f1;
+const HASH512_H4: u64 = 0x510e527fade682d1;
+const HASH512_H5: u64 = 0x9b05688c2b3e6c1f;
+const HASH512_H6: u64 = 0x1f83d9abfb41bd6b;
+const HASH512_H7: u64 = 0x5be0cd19137e2179;
 
-const HASH384_K: [u64; 80] = [
+const HASH512_K: [u64; 80] = [
     0x428a2f98d728ae22,
     0x7137449123ef65cd,
     0xb5c0fbcfec4d3b2f,
@@ -109,13 +109,13 @@ const HASH384_K: [u64; 80] = [
     0x6c44198c4a475817,
 ];
 
-pub struct HASH384 {
+pub struct HASH512 {
     length: [u64; 2],
     h: [u64; 8],
     w: [u64; 80],
 }
 
-impl HASH384 {
+impl HASH512 {
     fn s(n: u64, x: u64) -> u64 {
         ((x) >> n) | ((x) << (64 - n))
     }
@@ -132,101 +132,149 @@ impl HASH384 {
     }
 
     fn sig0(x: u64) -> u64 {
-        HASH384::s(28, x) ^ HASH384::s(34, x) ^ HASH384::s(39, x)
+        HASH512::s(28, x) ^ HASH512::s(34, x) ^ HASH512::s(39, x)
     }
 
     fn sig1(x: u64) -> u64 {
-        HASH384::s(14, x) ^ HASH384::s(18, x) ^ HASH384::s(41, x)
+        HASH512::s(14, x) ^ HASH512::s(18, x) ^ HASH512::s(41, x)
     }
 
     fn theta0(x: u64) -> u64 {
-        HASH384::s(1, x) ^ HASH384::s(8, x) ^ HASH384::r(7, x)
+        HASH512::s(1, x) ^ HASH512::s(8, x) ^ HASH512::r(7, x)
     }
 
     fn theta1(x: u64) -> u64 {
-        HASH384::s(19, x) ^ HASH384::s(61, x) ^ HASH384::r(6, x)
+        HASH512::s(19, x) ^ HASH512::s(61, x) ^ HASH512::r(6, x)
     }
 
-    pub fn as_bytes(&self,array: &mut [u8]) {
-        let mut ptr=0;
+    pub fn as_bytes(&self, array: &mut [u8]) {
+        let mut ptr = 0;
         for i in 0..2 {
-            let mut t=self.length[i];
-            array[ptr]=(t%256) as u8; t/=256; ptr+=1;
-            array[ptr]=(t%256) as u8; t/=256; ptr+=1;
-            array[ptr]=(t%256) as u8; t/=256; ptr+=1;
-            array[ptr]=(t%256) as u8; t/=256; ptr+=1;
-            array[ptr]=(t%256) as u8; t/=256; ptr+=1;
-            array[ptr]=(t%256) as u8; t/=256; ptr+=1;
-            array[ptr]=(t%256) as u8; t/=256; ptr+=1;
-            array[ptr]=t as u8; ptr+=1;
+            let mut t = self.length[i];
+            array[ptr] = (t % 256) as u8;
+            t /= 256;
+            ptr += 1;
+            array[ptr] = (t % 256) as u8;
+            t /= 256;
+            ptr += 1;
+            array[ptr] = (t % 256) as u8;
+            t /= 256;
+            ptr += 1;
+            array[ptr] = (t % 256) as u8;
+            t /= 256;
+            ptr += 1;
+            array[ptr] = (t % 256) as u8;
+            t /= 256;
+            ptr += 1;
+            array[ptr] = (t % 256) as u8;
+            t /= 256;
+            ptr += 1;
+            array[ptr] = (t % 256) as u8;
+            t /= 256;
+            ptr += 1;
+            array[ptr] = t as u8;
+            ptr += 1;
         }
         for i in 0..8 {
-            let mut t=self.h[i];
-            array[ptr]=(t%256) as u8; t/=256; ptr+=1;
-            array[ptr]=(t%256) as u8; t/=256; ptr+=1;
-            array[ptr]=(t%256) as u8; t/=256; ptr+=1;
-            array[ptr]=(t%256) as u8; t/=256; ptr+=1;
-            array[ptr]=(t%256) as u8; t/=256; ptr+=1;
-            array[ptr]=(t%256) as u8; t/=256; ptr+=1;
-            array[ptr]=(t%256) as u8; t/=256; ptr+=1;
-            array[ptr]=t as u8; ptr+=1;
+            let mut t = self.h[i];
+            array[ptr] = (t % 256) as u8;
+            t /= 256;
+            ptr += 1;
+            array[ptr] = (t % 256) as u8;
+            t /= 256;
+            ptr += 1;
+            array[ptr] = (t % 256) as u8;
+            t /= 256;
+            ptr += 1;
+            array[ptr] = (t % 256) as u8;
+            t /= 256;
+            ptr += 1;
+            array[ptr] = (t % 256) as u8;
+            t /= 256;
+            ptr += 1;
+            array[ptr] = (t % 256) as u8;
+            t /= 256;
+            ptr += 1;
+            array[ptr] = (t % 256) as u8;
+            t /= 256;
+            ptr += 1;
+            array[ptr] = t as u8;
+            ptr += 1;
         }
         for i in 0..80 {
-            let mut t=self.w[i];
-            array[ptr]=(t%256) as u8; t/=256; ptr+=1;
-            array[ptr]=(t%256) as u8; t/=256; ptr+=1;
-            array[ptr]=(t%256) as u8; t/=256; ptr+=1;
-            array[ptr]=(t%256) as u8; t/=256; ptr+=1;
-            array[ptr]=(t%256) as u8; t/=256; ptr+=1;
-            array[ptr]=(t%256) as u8; t/=256; ptr+=1;
-            array[ptr]=(t%256) as u8; t/=256; ptr+=1;
-            array[ptr]=t as u8; ptr+=1;
+            let mut t = self.w[i];
+            array[ptr] = (t % 256) as u8;
+            t /= 256;
+            ptr += 1;
+            array[ptr] = (t % 256) as u8;
+            t /= 256;
+            ptr += 1;
+            array[ptr] = (t % 256) as u8;
+            t /= 256;
+            ptr += 1;
+            array[ptr] = (t % 256) as u8;
+            t /= 256;
+            ptr += 1;
+            array[ptr] = (t % 256) as u8;
+            t /= 256;
+            ptr += 1;
+            array[ptr] = (t % 256) as u8;
+            t /= 256;
+            ptr += 1;
+            array[ptr] = (t % 256) as u8;
+            t /= 256;
+            ptr += 1;
+            array[ptr] = t as u8;
+            ptr += 1;
         }
     }
 
-    pub fn from_bytes(&mut self,array: &[u8]) {
-        let mut ptr=0;
+    pub fn from_bytes(&mut self, array: &[u8]) {
+        let mut ptr = 0;
         for i in 0..2 {
-            let mut t=array[ptr+7] as u64; 
-            t=256*t+(array[ptr+6] as u64); 
-            t=256*t+(array[ptr+5] as u64); 
-            t=256*t+(array[ptr+4] as u64); 
-            t=256*t+(array[ptr+3] as u64); 
-            t=256*t+(array[ptr+2] as u64); 
-            t=256*t+(array[ptr+1] as u64); 
-            t=256*t+(array[ptr] as u64); 
-            self.length[i]=t; ptr+=8;
+            let mut t = array[ptr + 7] as u64;
+            t = 256 * t + (array[ptr + 6] as u64);
+            t = 256 * t + (array[ptr + 5] as u64);
+            t = 256 * t + (array[ptr + 4] as u64);
+            t = 256 * t + (array[ptr + 3] as u64);
+            t = 256 * t + (array[ptr + 2] as u64);
+            t = 256 * t + (array[ptr + 1] as u64);
+            t = 256 * t + (array[ptr] as u64);
+            self.length[i] = t;
+            ptr += 8;
         }
         for i in 0..8 {
-            let mut t=array[ptr+7] as u64; 
-            t=256*t+(array[ptr+6] as u64); 
-            t=256*t+(array[ptr+5] as u64); 
-            t=256*t+(array[ptr+4] as u64); 
-            t=256*t+(array[ptr+3] as u64); 
-            t=256*t+(array[ptr+2] as u64); 
-            t=256*t+(array[ptr+1] as u64); 
-            t=256*t+(array[ptr] as u64); 
-            self.h[i]=t; ptr+=8;
+            let mut t = array[ptr + 7] as u64;
+            t = 256 * t + (array[ptr + 6] as u64);
+            t = 256 * t + (array[ptr + 5] as u64);
+            t = 256 * t + (array[ptr + 4] as u64);
+            t = 256 * t + (array[ptr + 3] as u64);
+            t = 256 * t + (array[ptr + 2] as u64);
+            t = 256 * t + (array[ptr + 1] as u64);
+            t = 256 * t + (array[ptr] as u64);
+            self.h[i] = t;
+            ptr += 8;
         }
         for i in 0..80 {
-            let mut t=array[ptr+7] as u64;
-            t=256*t+(array[ptr+6] as u64); 
-            t=256*t+(array[ptr+5] as u64); 
-            t=256*t+(array[ptr+4] as u64); 
-            t=256*t+(array[ptr+3] as u64); 
-            t=256*t+(array[ptr+2] as u64); 
-            t=256*t+(array[ptr+1] as u64); 
-            t=256*t+(array[ptr] as u64); 
-            self.w[i]=t; ptr+=8;
+            let mut t = array[ptr + 7] as u64;
+            t = 256 * t + (array[ptr + 6] as u64);
+            t = 256 * t + (array[ptr + 5] as u64);
+            t = 256 * t + (array[ptr + 4] as u64);
+            t = 256 * t + (array[ptr + 3] as u64);
+            t = 256 * t + (array[ptr + 2] as u64);
+            t = 256 * t + (array[ptr + 1] as u64);
+            t = 256 * t + (array[ptr] as u64);
+            self.w[i] = t;
+            ptr += 8;
         }
     }
 
     fn transform(&mut self) {
         /* basic transformation step */
         for j in 16..80 {
-            self.w[j] = HASH384::theta1(self.w[j - 2])
+            self.w[j] = HASH512::theta1(self.w[j - 2])
                 .wrapping_add(self.w[j - 7])
-                .wrapping_add(HASH384::theta0(self.w[j - 15]))
+                .wrapping_add(HASH512::theta0(self.w[j - 15]))
                 .wrapping_add(self.w[j - 16]);
         }
         let mut a = self.h[0];
@@ -240,11 +288,11 @@ impl HASH384 {
         for j in 0..80 {
             /* 64 times - mush it up */
             let t1 = hh
-                .wrapping_add(HASH384::sig1(e))
-                .wrapping_add(HASH384::ch(e, f, g))
-                .wrapping_add(HASH384_K[j])
+                .wrapping_add(HASH512::sig1(e))
+                .wrapping_add(HASH512::ch(e, f, g))
+                .wrapping_add(HASH512_K[j])
                 .wrapping_add(self.w[j]);
-            let t2 = HASH384::sig0(a).wrapping_add(HASH384::maj(a, b, c));
+            let t2 = HASH512::sig0(a).wrapping_add(HASH512::maj(a, b, c));
             hh = g;
             g = f;
             f = e;
@@ -272,18 +320,18 @@ impl HASH384 {
         }
         self.length[0] = 0;
         self.length[1] = 0;
-        self.h[0] = HASH384_H0;
-        self.h[1] = HASH384_H1;
-        self.h[2] = HASH384_H2;
-        self.h[3] = HASH384_H3;
-        self.h[4] = HASH384_H4;
-        self.h[5] = HASH384_H5;
-        self.h[6] = HASH384_H6;
-        self.h[7] = HASH384_H7;
+        self.h[0] = HASH512_H0;
+        self.h[1] = HASH512_H1;
+        self.h[2] = HASH512_H2;
+        self.h[3] = HASH512_H3;
+        self.h[4] = HASH512_H4;
+        self.h[5] = HASH512_H5;
+        self.h[6] = HASH512_H6;
+        self.h[7] = HASH512_H7;
     }
 
-    pub fn new() -> HASH384 {
-        let mut nh = HASH384 {
+    pub fn new() -> HASH512 {
+        let mut nh = HASH512 {
             length: [0; 2],
             h: [0; 8],
             w: [0; 80],
@@ -292,21 +340,21 @@ impl HASH384 {
         nh
     }
 
-    pub fn new_copy(hh: &HASH384) -> HASH384 {
-        let mut nh = HASH384 {
+    pub fn new_copy(hh: &HASH512) -> HASH512 {
+        let mut nh = HASH512 {
             length: [0; 2],
             h: [0; 8],
             w: [0; 80],
         };
-        nh.length[0]=hh.length[0];
-        nh.length[1]=hh.length[1];
+        nh.length[0] = hh.length[0];
+        nh.length[1] = hh.length[1];
         for i in 0..80 {
             nh.w[i] = hh.w[i];
         }
         for i in 0..8 {
             nh.h[i] = hh.h[i];
         }
-        nh        
+        nh
     }
 
     /* process a single byte */
@@ -342,9 +390,9 @@ impl HASH384 {
     }
 
     /* Generate 32-byte Hash */
-    pub fn hash(&mut self) -> [u8; 48] {
+    pub fn hash(&mut self) -> [u8; 64] {
         /* pad message and finish - supply digest */
-        let mut digest: [u8; 48] = [0; 48];
+        let mut digest: [u8; 64] = [0; 64];
         let len0 = self.length[0];
         let len1 = self.length[1];
         self.process(0x80);
@@ -354,30 +402,30 @@ impl HASH384 {
         self.w[14] = len1;
         self.w[15] = len0;
         self.transform();
-        for i in 0..48 {
+        for i in 0..64 {
             /* convert to bytes */
             digest[i] = ((self.h[i / 8] >> (8 * (7 - i % 8))) & 0xff) as u8;
         }
         self.init();
         digest
     }
-    pub fn continuing_hash(&self) -> [u8; 48] {
-        let mut sh=HASH384::new_copy(self);
+    pub fn continuing_hash(&self) -> [u8; 64] {
+        let mut sh = HASH512::new_copy(self);
         sh.hash()
     }
 }
 
-//09330c33f71147e8 3d192fc782cd1b47 53111b173b3b05d2 2fa08086e3b0f712 fcc7c71a557e2db9 66c3e9fa91746039
+//8e959b75dae313da 8cf4f72814fc143f 8f7779c6eb9f7fa1 7299aeadb6889018 501d289e4900f7e4 331b99dec4b5433a c7d329eeb6dd2654 5e96e55b874be909
 /*
 fn main() {
     let s = String::from("abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu");
     let test = s.into_bytes();
-    let mut sh=HASH384::new();
+    let mut sh=HASH512::new();
 
     for i in 0..test.len(){
         sh.process(test[i]);
     }
 
     let digest=sh.hash();
-    for i in 0..48 {print!("{:02x}",digest[i])}
+    for i in 0..64 {print!("{:02x}",digest[i])}
 } */

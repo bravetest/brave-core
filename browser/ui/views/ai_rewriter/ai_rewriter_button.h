@@ -37,6 +37,9 @@ class AIRewriterButton : public views::WidgetDelegateView,
   // content::WebContentsObserver:
   void WebContentsDestroyed() override;
   void PrimaryPageChanged(content::Page& page) override;
+
+ private:
+  int top_offset_;
 };
 
 BEGIN_VIEW_BUILDER(/*no export*/, AIRewriterButton, views::WidgetDelegateView)

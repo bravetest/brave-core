@@ -86,6 +86,11 @@ void AIRewriterButtonPositioner::DidCreateDocumentElement() {
                           weak_ptr_factory_.GetWeakPtr(), document));
 }
 
+void AIRewriterButtonPositioner::DidChangeScrollOffset() {
+  UpdateButton(render_frame()->GetWebFrame()->GetDocument(),
+               blink::WebDOMEvent());
+}
+
 void AIRewriterButtonPositioner::UpdateButton(blink::WebDocument document,
                                               blink::WebDOMEvent event) {
   if (document.IsNull()) {
@@ -103,7 +108,8 @@ void AIRewriterButtonPositioner::UpdateButton(blink::WebDocument document,
   }
 
   auto bounds = frame->GetSelectionBoundsRectForTesting();
-  button_->Show(bounds);
+  auto viewport_bounds = render_frame()->ConvertViewportToWindow(bounds);
+  button_->Show(viewport_bounds);
 }
 
 }  // namespace ai_rewriter

@@ -33,6 +33,7 @@ class COMPONENT_EXPORT(AI_REWRITER_RENDERER) AIRewriterButtonPositioner
   // content::RenderFrameObserver:
   void DidCreateDocumentElement() override;
   void OnDestruct() override;
+  void DidChangeScrollOffset() override;
 
  private:
   void UpdateButton(blink::WebDocument document, blink::WebDOMEvent event);

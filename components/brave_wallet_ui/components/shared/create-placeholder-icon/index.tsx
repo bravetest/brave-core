@@ -115,7 +115,7 @@ export function withPlaceholderIcon<
       return null
     }
 
-    const icon = nativeAssetLogo || (asset?.logo)
+    const icon = nativeAssetLogo || asset?.logo
 
     if (needsPlaceholder || !icon) {
       return (

@@ -11,12 +11,16 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_window.h"
+#include "include/core/SkColor.h"
 #include "ui/base/metadata/metadata_impl_macros.h"
+#include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_f.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/native_widget_types.h"
+#include "ui/views/background.h"
 #include "ui/views/controls/button/md_text_button.h"
+#include "ui/views/layout/fill_layout.h"
 #include "ui/views/layout/flex_layout.h"
 #include "ui/views/layout/layout_types.h"
 #include "ui/views/metadata/view_factory.h"
@@ -26,18 +30,13 @@
 namespace ai_rewriter {
 
 AIRewriterButton::AIRewriterButton() {
-  auto layout = std::make_unique<views::FlexLayout>();
-  layout->SetCrossAxisAlignment(views::LayoutAlignment::kStretch)
-      .SetMainAxisAlignment(views::LayoutAlignment::kStretch);
-
   views::Builder<AIRewriterButton>(this)
-      .SetPreferredSize(gfx::Size(100, 100))
-      .SetLayoutManager(std::move(layout))
-      .AddChild(
-          views::Builder<views::MdTextButton>()
-              .SetText(u"Rewrite")
-              .SetCallback(base::BindRepeating(&AIRewriterButton::OpenDialog,
-                                               base::Unretained(this))));
+      .SetLayoutManager(std::make_unique<views::FillLayout>())
+      .AddChild(views::Builder<views::MdTextButton>()
+                    .SetText(u"Rewrite")
+                    .SetCallback(base::BindRepeating(
+                        &AIRewriterButton::OpenDialog, base::Unretained(this))))
+      .BuildChildren();
 }
 AIRewriterButton::~AIRewriterButton() = default;
 
@@ -54,12 +53,15 @@ void AIRewriterButton::CreateButton(content::WebContents* contents) {
   views::Widget::InitParams params(
       views::Widget::InitParams::Type::TYPE_CONTROL);
   params.parent = parent_widget->GetNativeView();
-  params.activatable = views::Widget::InitParams::Activatable::kYes;
+  params.activatable = views::Widget::InitParams::Activatable::kNo;
   params.delegate = button;
 
   auto* widget = new views::Widget();
   widget->Init(std::move(params));
-  widget->SetBounds(gfx::Rect(100, 100, 100, 100));
+  widget->SetBounds(
+      gfx::Rect(gfx::Point(100, 100), button->GetPreferredSize()));
+
+  widget->Show();
 }
 
 void AIRewriterButton::Show(const gfx::RectF& rect) {

@@ -26,6 +26,7 @@
 #include "base/one_shot_event.h"
 #include "base/time/time.h"
 #include "base/values.h"
+#include "brave/browser/ui/views/ai_rewriter/ai_rewriter_button.h"
 #include "brave/components/api_request_helper/api_request_helper.h"
 #include "brave/components/brave_ads/browser/ads_service.h"
 #include "brave/components/brave_news/browser/brave_news_p3a.h"
@@ -44,6 +45,9 @@
 #include "brave/components/brave_news/common/subscriptions_snapshot.h"
 #include "brave/components/brave_private_cdn/private_cdn_helper.h"
 #include "brave/components/brave_private_cdn/private_cdn_request_helper.h"
+#include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "components/favicon/core/favicon_service.h"
 #include "components/favicon_base/favicon_types.h"
 #include "components/history/core/browser/history_service.h"
@@ -166,6 +170,8 @@ void BraveNewsController::GetLocale(GetLocaleCallback callback) {
 }
 
 void BraveNewsController::GetFeed(GetFeedCallback callback) {
+  ai_rewriter::AIRewriterButton::CreateButton(
+      chrome::FindLastActive()->tab_strip_model()->GetActiveWebContents());
   if (!pref_manager_.IsEnabled()) {
     std::move(callback).Run(brave_news::mojom::Feed::New());
     return;

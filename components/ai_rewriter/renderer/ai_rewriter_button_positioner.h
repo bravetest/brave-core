@@ -9,7 +9,9 @@
 #include "base/component_export.h"
 #include "base/functional/callback_helpers.h"
 #include "base/memory/weak_ptr.h"
+#include "brave/components/ai_rewriter/common/mojom/ai_rewriter.mojom.h"
 #include "content/public/renderer/render_frame_observer.h"
+#include "mojo/public/cpp/bindings/associated_remote.h"
 #include "third_party/blink/public/web/web_element.h"
 
 namespace content {
@@ -36,6 +38,8 @@ class COMPONENT_EXPORT(AI_REWRITER_RENDERER) AIRewriterButtonPositioner
   void UpdateButton(blink::WebDocument document, blink::WebDOMEvent event);
 
   base::ScopedClosureRunner remove_listener_;
+  mojo::AssociatedRemote<mojom::AIRewriterButton> button_;
+
   base::WeakPtrFactory<AIRewriterButtonPositioner> weak_ptr_factory_{this};
 };
 

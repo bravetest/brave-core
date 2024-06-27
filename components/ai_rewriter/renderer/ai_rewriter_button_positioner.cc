@@ -14,6 +14,8 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_frame_observer.h"
+#include "third_party/blink/public/common/associated_interfaces/associated_interface_provider.h"
+#include "third_party/blink/public/common/associated_interfaces/associated_interface_registry.h"
 #include "third_party/blink/public/mojom/page/display_cutout.mojom.h"
 #include "third_party/blink/public/web/web_document.h"
 #include "third_party/blink/public/web/web_dom_event.h"
@@ -65,7 +67,9 @@ namespace {
 
 AIRewriterButtonPositioner::AIRewriterButtonPositioner(
     content::RenderFrame* frame)
-    : content::RenderFrameObserver(frame) {}
+    : content::RenderFrameObserver(frame) {
+  frame->GetRemoteAssociatedInterfaces()->GetInterface(&button_);
+}
 
 AIRewriterButtonPositioner::~AIRewriterButtonPositioner() = default;
 
@@ -91,14 +95,15 @@ void AIRewriterButtonPositioner::UpdateButton(blink::WebDocument document,
   auto* frame = document.GetFrame();
   auto selection = frame->SelectionRange();
 
-  if (selection.length() < 2) {
+  // Backwards selections have negative length, so use abs
+  if (abs(selection.length()) < 2) {
     // Hide button, not much is selected
-    LOG(ERROR) << "Hiding";
+    button_->Hide();
     return;
   }
 
   auto bounds = frame->GetSelectionBoundsRectForTesting();
-  LOG(ERROR) << "Showing: " << bounds.ToString();
+  button_->Show(bounds);
 }
 
 }  // namespace ai_rewriter

@@ -10,10 +10,12 @@
 
 #include "brave/browser/ui/views/ai_rewriter/ai_rewriter_button.h"
 #include "brave/components/ai_rewriter/common/mojom/ai_rewriter.mojom.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/visibility.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
+#include "mojo/public/cpp/bindings/associated_receiver_set.h"
 #include "mojo/public/cpp/bindings/pending_receiver.h"
 #include "mojo/public/cpp/bindings/receiver_set.h"
 #include "partition_alloc/pointers/raw_ptr.h"
@@ -29,7 +31,9 @@ class AIRewriterTabHelper
   AIRewriterTabHelper& operator=(const AIRewriterTabHelper&) = delete;
   ~AIRewriterTabHelper() override;
 
-  void Bind(mojo::PendingReceiver<mojom::AIRewriterButton> receiver);
+  static void Bind(
+      content::RenderFrameHost* host,
+      mojo::PendingAssociatedReceiver<mojom::AIRewriterButton> receiver);
 
   // content::WebContentsObserver:
   void PrimaryPageChanged(content::Page& page) override;
@@ -40,16 +44,12 @@ class AIRewriterTabHelper
   void Show(const gfx::Rect& rect) override;
 
  private:
-  struct BindingContext {
-    int process_id;
-    int frame_id;
-  };
   explicit AIRewriterTabHelper(content::WebContents* contents);
 
   ai_rewriter::AIRewriterButton* GetButton();
 
   raw_ptr<ai_rewriter::AIRewriterButton> button_;
-  mojo::ReceiverSet<mojom::AIRewriterButton, BindingContext> receivers_;
+  mojo::AssociatedReceiverSet<mojom::AIRewriterButton> receivers_;
 
   friend WebContentsUserData;
   WEB_CONTENTS_USER_DATA_KEY_DECL();

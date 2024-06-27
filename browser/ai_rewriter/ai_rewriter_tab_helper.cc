@@ -6,11 +6,14 @@
 #include "brave/browser/ai_rewriter/ai_rewriter_tab_helper.h"
 
 #include "brave/browser/ui/views/ai_rewriter/ai_rewriter_button.h"
+#include "brave/components/ai_rewriter/common/mojom/ai_rewriter.mojom.h"
 #include "content/public/browser/page.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/visibility.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
+#include "mojo/public/cpp/bindings/pending_associated_receiver.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_f.h"
 
@@ -22,15 +25,28 @@ AIRewriterTabHelper::AIRewriterTabHelper(content::WebContents* contents)
 
 AIRewriterTabHelper::~AIRewriterTabHelper() = default;
 
+// static
+void AIRewriterTabHelper::Bind(
+    content::RenderFrameHost* rfh,
+    mojo::PendingAssociatedReceiver<ai_rewriter::mojom::AIRewriterButton>
+        receiver) {
+  auto* contents = content::WebContents::FromRenderFrameHost(rfh);
+  CHECK(contents);
+
+  AIRewriterTabHelper::CreateForWebContents(contents);
+  auto* tab_helper = AIRewriterTabHelper::FromWebContents(contents);
+  CHECK(tab_helper);
+
+  tab_helper->receivers_.Add(tab_helper, std::move(receiver));
+}
+
 void AIRewriterTabHelper::OnVisibilityChanged(content::Visibility visibility) {
   if (visibility == content::Visibility::HIDDEN) {
     Hide();
   }
 }
 
-void AIRewriterTabHelper::PrimaryPageChanged(content::Page& page) {
-  
-}
+void AIRewriterTabHelper::PrimaryPageChanged(content::Page& page) {}
 
 void AIRewriterTabHelper::Hide() {
   GetButton()->Hide();

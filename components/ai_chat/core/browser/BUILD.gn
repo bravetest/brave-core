@@ -5,6 +5,7 @@
 
 import("//brave/components/ai_chat/core/common/buildflags/buildflags.gni")
 import("//brave/components/text_recognition/common/buildflags/buildflags.gni")
+import("//components/optimization_guide/features.gni")
 
 assert(enable_ai_chat)
 
@@ -49,7 +50,10 @@ static_library("browser") {
     ]
   }
 
-  public_deps = [ "//base" ]
+  public_deps = [
+    ":text_embedder",
+    "//base",
+  ]
 
   deps = [
     "//brave/brave_domains",
@@ -84,6 +88,24 @@ static_library("browser") {
   if (enable_text_recognition) {
     deps += [ "//brave/components/text_recognition/browser" ]
   }
+}
+
+source_set("text_embedder") {
+  sources = [
+    "text_embedder.cc",
+    "text_embedder.h",
+  ]
+
+  deps = [
+    "//base",
+    #"//third_party/tflite:tflite_builtin_op_resolver",
+  ]
+
+  public_deps = [
+    "//third_party/tflite",
+    "//third_party/tflite_support",
+    "//third_party/tflite_support:tflite_support_proto",
+  ]
 }
 
 if (!is_ios) {

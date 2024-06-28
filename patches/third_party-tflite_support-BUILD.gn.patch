@@ -1,0 +1,52 @@
+diff --git a/third_party/tflite_support/BUILD.gn b/third_party/tflite_support/BUILD.gn
+index 214e39238ae4a52aa42775916062423e872e8b82..8ed24de69565d20847803a54971e846ecab876c7 100644
+--- a/third_party/tflite_support/BUILD.gn
++++ b/third_party/tflite_support/BUILD.gn
+@@ -62,6 +62,17 @@ flatbuffer("metadata_schema") {
+   args = [ "--no-warnings" ]
+ }
+ 
++flatbuffer("encoder_config") {
++  sources = [
++  "src/tensorflow_lite_support/custom_ops/kernel/sentencepiece/encoder_config.fbs",
++  "src/tensorflow_lite_support/custom_ops/kernel/sentencepiece/config.fbs",
++  ]
++
++  # Disable warnings as the flatbuffer uses snakecase for sentencePiece which
++  # now causes a warning message with flatc.
++  args = [ "--no-warnings" ]
++}
++
+ static_library("tflite_support") {
+   sources = [
+     "src/tensorflow_lite_support/cc/common.cc",
+@@ -104,6 +115,13 @@ static_library("tflite_support") {
+     "src/tensorflow_lite_support/cc/task/text/text_embedder.h",
+     "src/tensorflow_lite_support/cc/task/text/utils/bert_utils.cc",
+     "src/tensorflow_lite_support/cc/task/text/utils/bert_utils.h",
++    "src/tensorflow_lite_support/cc/task/text/utils/text_op_resolver.cc",
++    "src/tensorflow_lite_support/cc/task/text/utils/text_op_resolver.h",
++    "src/tensorflow_lite_support/custom_ops/kernel/ragged/ragged_tensor_to_tensor_tflite.cc",
++    "src/tensorflow_lite_support/custom_ops/kernel/sentencepiece/sentencepiece_tokenizer.h",
++    "src/tensorflow_lite_support/custom_ops/kernel/sentencepiece/sentencepiece_tokenizer_tflite.cc",
++    "src/tensorflow_lite_support/custom_ops/kernel/sentencepiece/optimized_encoder.cc",
++    "src/tensorflow_lite_support/custom_ops/kernel/sentencepiece/optimized_encoder.h",
+     "src/tensorflow_lite_support/cc/task/text/utils/universal_sentence_encoder_utils.cc",
+     "src/tensorflow_lite_support/cc/task/text/utils/universal_sentence_encoder_utils.h",
+     "src/tensorflow_lite_support/cc/task/vision/core/classification_head.cc",
+@@ -145,6 +163,7 @@ static_library("tflite_support") {
+ 
+   deps = [
+     ":metadata_schema",
++    ":encoder_config",
+     ":tflite_support_proto",
+     "//base",
+     "//third_party/flatbuffers",
+@@ -153,6 +172,7 @@ static_library("tflite_support") {
+     "//third_party/smhasher:murmurhash2",
+     "//third_party/tensorflow-text",
+     "//third_party/tflite",
++    "//third_party/tflite:tflite_builtin_op_resolver",
+     "//third_party/tflite:tflite_proto",
+     "//third_party/tflite:tflite_public_headers",
+     "//third_party/zlib:minizip",

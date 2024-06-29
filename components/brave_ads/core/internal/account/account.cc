@@ -162,12 +162,9 @@ void Account::ProcessDepositCallback(const std::string& creative_instance_id,
                                      base::Value::Dict user_data,
                                      const bool success,
                                      const TransactionInfo& transaction) const {
-  if (!success) {
-    return FailedToProcessDeposit(creative_instance_id, ad_type,
-                                  confirmation_type);
-  }
-
-  SuccessfullyProcessedDeposit(transaction, std::move(user_data));
+  success ? SuccessfullyProcessedDeposit(transaction, std::move(user_data))
+          : FailedToProcessDeposit(creative_instance_id, ad_type,
+                                   confirmation_type);
 }
 
 void Account::SuccessfullyProcessedDeposit(const TransactionInfo& transaction,

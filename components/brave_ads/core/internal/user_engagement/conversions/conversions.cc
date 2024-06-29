@@ -213,7 +213,7 @@ void Conversions::CheckForConversions(
   }
 
   if (!did_convert) {
-    BLOG(1, "There are no conversions");
+    BLOG(1, "There were no creative set conversion matches");
   }
 }
 

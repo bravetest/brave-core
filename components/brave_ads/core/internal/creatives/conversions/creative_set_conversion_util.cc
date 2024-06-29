@@ -84,7 +84,7 @@ CreativeSetConversionList GetCreativeSetConversionsWithinObservationWindow(
       creative_set_conversions,
       std::back_inserter(unexpired_creative_set_conversions),
       [&ad_event](const CreativeSetConversionInfo& creative_set_conversion) {
-        return IsAdEventWithinObservationWindow(
+        return DidAdEventOccurWithinObservationWindow(
             ad_event, creative_set_conversion.observation_window);
       });
 

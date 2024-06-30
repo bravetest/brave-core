@@ -19,6 +19,7 @@
 #include "brave/browser/ui/tabs/brave_tab_strip_model.h"
 #include "brave/browser/ui/tabs/split_view_browser_data.h"
 #include "brave/browser/ui/tabs/split_view_browser_data_observer.h"
+#include "brave/browser/ui/views/split_view/split_view_separator.h"
 #include "brave/components/brave_vpn/common/buildflags/buildflags.h"
 #include "brave/components/brave_wayback_machine/buildflags/buildflags.h"
 #include "brave/components/commands/browser/accelerator_pref_manager.h"
@@ -54,14 +55,13 @@ class SidebarBrowserTest;
 }  // namespace sidebar
 
 class BraveBrowser;
-class BraveHelpBubbleHostView;
 class ContentsLayoutManager;
 class SidebarContainerView;
-class SplitViewLocationBar;
-class SplitViewSeparator;
-class VerticalTabStripWidgetDelegateView;
-class ViewShadow;
 class WalletButton;
+class ViewShadow;
+class VerticalTabStripWidgetDelegateView;
+class BraveHelpBubbleHostView;
+class SplitViewSeparator;
 
 class BraveBrowserView : public BrowserView,
                          public commands::AcceleratorService::Observer,
@@ -118,11 +118,6 @@ class BraveBrowserView : public BrowserView,
   vertical_tab_strip_widget_delegate_view() {
     return vertical_tab_strip_widget_delegate_view_;
   }
-
-  const auto* secondary_contents_web_view() const {
-    return secondary_contents_web_view_.get();
-  }
-
   bool ShowBraveHelpBubbleView(const std::string& text) override;
 
   // commands::AcceleratorService:
@@ -132,7 +127,6 @@ class BraveBrowserView : public BrowserView,
   void OnTileTabs(const SplitViewBrowserData::Tile& tile) override;
   void OnWillBreakTile(const SplitViewBrowserData::Tile& tile) override;
   void OnSwapTabsInTile(const SplitViewBrowserData::Tile& tile) override;
-  void OnOrientationChanged(const SplitViewBrowserData::Tile& tile) override;
 
  private:
   class TabCyclingEventHandler;
@@ -195,7 +189,6 @@ class BraveBrowserView : public BrowserView,
   bool IsActiveWebContentsTiled(const SplitViewBrowserData::Tile& tile) const;
   void UpdateSplitViewSizeDelta(content::WebContents* old_contents,
                                 content::WebContents* new_contents);
-  void UpdateSplitViewOrientation();
   void UpdateContentsWebViewVisual();
   void UpdateContentsWebViewBorder();
   void UpdateSecondaryContentsWebViewVisibility();
@@ -229,7 +222,6 @@ class BraveBrowserView : public BrowserView,
   raw_ptr<views::WebView> secondary_devtools_web_view_ = nullptr;
   raw_ptr<ContentsWebView> secondary_contents_web_view_ = nullptr;
   raw_ptr<SplitViewSeparator> split_view_separator_ = nullptr;
-  raw_ptr<SplitViewLocationBar> secondary_location_bar_ = nullptr;
 
   PrefChangeRegistrar pref_change_registrar_;
   base::ScopedObservation<commands::AcceleratorService,

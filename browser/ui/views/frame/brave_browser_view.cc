@@ -45,7 +45,6 @@
 #include "brave/browser/ui/views/omnibox/brave_omnibox_view_views.h"
 #include "brave/browser/ui/views/sidebar/sidebar_container_view.h"
 #include "brave/browser/ui/views/speedreader/reader_mode_toolbar_view.h"
-#include "brave/browser/ui/views/split_view/split_view_location_bar.h"
 #include "brave/browser/ui/views/split_view/split_view_separator.h"
 #include "brave/browser/ui/views/tabs/vertical_tab_utils.h"
 #include "brave/browser/ui/views/toolbar/bookmark_button.h"
@@ -439,26 +438,6 @@ void BraveBrowserView::UpdateSplitViewSizeDelta(
   }
 }
 
-void BraveBrowserView::UpdateSplitViewOrientation() {
-  auto* split_view_browser_data =
-      SplitViewBrowserData::FromBrowser(browser_.get());
-  if (!split_view_browser_data) {
-    return;
-  }
-
-  auto* model = browser()->tab_strip_model();
-  auto active_tab_handle = model->GetActiveTab()->GetHandle();
-  auto active_tile = split_view_browser_data->GetTile(active_tab_handle);
-  if (!active_tile) {
-    return;
-  }
-
-  auto* contents_layout_manager = static_cast<BraveContentsLayoutManager*>(
-      contents_container()->GetLayoutManager());
-  contents_layout_manager->SetSplitViewOrientation(
-      split_view_browser_data->GetOrientation(active_tab_handle));
-}
-
 void BraveBrowserView::UpdateContentsWebViewVisual() {
   auto* split_view_browser_data =
       SplitViewBrowserData::FromBrowser(browser_.get());
@@ -550,7 +529,6 @@ void BraveBrowserView::UpdateSecondaryContentsWebViewVisibility() {
     if (secondary_contents_web_view_->web_contents() != contents) {
       secondary_contents_web_view_->SetWebContents(nullptr);
       secondary_contents_web_view_->SetWebContents(contents);
-      secondary_location_bar_->SetWebContents(contents);
     }
 
     secondary_contents_web_view_->SetVisible(true);
@@ -562,7 +540,6 @@ void BraveBrowserView::UpdateSecondaryContentsWebViewVisibility() {
         second_tile_is_active_web_contents);
   } else {
     secondary_contents_web_view_->SetWebContents(nullptr);
-    secondary_location_bar_->SetWebContents(nullptr);
     secondary_contents_web_view_->SetVisible(false);
     secondary_devtools_web_view_->SetWebContents(nullptr);
     secondary_devtools_web_view_->SetVisible(false);
@@ -849,7 +826,6 @@ void BraveBrowserView::OnTileTabs(const SplitViewBrowserData::Tile& tile) {
     return;
   }
 
-  UpdateSplitViewOrientation();
   UpdateContentsWebViewVisual();
 }
 
@@ -870,17 +846,6 @@ void BraveBrowserView::OnSwapTabsInTile(
   }
 
   UpdateSecondaryContentsWebViewVisibility();
-}
-
-void BraveBrowserView::OnOrientationChanged(
-    const SplitViewBrowserData::Tile& tile) {
-  if (!IsActiveWebContentsTiled(tile)) {
-    return;
-  }
-
-  UpdateSplitViewOrientation();
-
-  contents_container()->DeprecatedLayoutImmediately();
 }
 
 void BraveBrowserView::CreateWalletBubble() {
@@ -924,11 +889,6 @@ void BraveBrowserView::AddedToWidget() {
 
     GetBrowserViewLayout()->set_vertical_tab_strip_host(
         vertical_tab_strip_host_view_.get());
-  }
-
-  if (secondary_contents_web_view_) {
-    secondary_location_bar_ = SplitViewLocationBar::Create(
-        browser()->profile()->GetPrefs(), secondary_contents_web_view_);
   }
 }
 
@@ -1175,8 +1135,6 @@ void BraveBrowserView::OnActiveTabChanged(content::WebContents* old_contents,
 
   if (supports_split_view) {
     UpdateSplitViewSizeDelta(old_contents, new_contents);
-
-    UpdateSplitViewOrientation();
 
     // Setting nullptr doesn't detach the previous contents.
     UpdateContentsWebViewVisual();

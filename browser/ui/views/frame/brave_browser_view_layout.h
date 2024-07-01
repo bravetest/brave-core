@@ -35,6 +35,13 @@ class BraveBrowserViewLayout : public BrowserViewLayout {
     sidebar_separator_ = sidebar_separator;
   }
 
+  void set_contents_container(views::View* container) {
+    const_cast<std::remove_const_t<decltype(contents_container_)>*>(
+        &contents_container_)
+        ->
+        operator=(container);
+  }
+
   // Returns the ideal sidebar width, given the current available width. Used
   // for determining the target width in sidebar width animations.
   int GetIdealSideBarWidth() const;

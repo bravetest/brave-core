@@ -7,6 +7,7 @@
 
 #include "brave/browser/ui/views/ai_rewriter/ai_rewriter_button.h"
 #include "brave/components/ai_rewriter/common/mojom/ai_rewriter.mojom.h"
+#include "chrome/browser/ui/browser_finder.h"
 #include "content/public/browser/page.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/visibility.h"
@@ -33,6 +34,11 @@ void AIRewriterTabHelper::Bind(
   auto* contents = content::WebContents::FromRenderFrameHost(rfh);
   CHECK(contents);
 
+  // Don't create this TabHelper for non-tabbed UI.
+  if (!chrome::FindBrowserWithTab(contents)) {
+    return;
+  }
+
   AIRewriterTabHelper::CreateForWebContents(contents);
   auto* tab_helper = AIRewriterTabHelper::FromWebContents(contents);
   CHECK(tab_helper);
@@ -49,17 +55,20 @@ void AIRewriterTabHelper::OnVisibilityChanged(content::Visibility visibility) {
 void AIRewriterTabHelper::PrimaryPageChanged(content::Page& page) {}
 
 void AIRewriterTabHelper::Hide() {
-  GetButton()->Hide();
+  if (auto* button = GetButton()) {
+    button->Hide();
+  }
 }
 
 void AIRewriterTabHelper::Show(const gfx::Rect& rect) {
-  GetButton()->Show(rect);
+  if (auto* button = GetButton()) {
+    button->Show(rect);
+  }
 }
 
-ai_rewriter::AIRewriterButton* AIRewriterTabHelper::GetButton() {
+ai_rewriter::AIRewriterButtonView* AIRewriterTabHelper::GetButton() {
   if (!button_) {
-    button_ = ai_rewriter::AIRewriterButton::CreateButton(web_contents());
-    CHECK(button_);
+    button_ = ai_rewriter::AIRewriterButtonView::MaybeCreateButton(web_contents());
   }
 
   return button_;

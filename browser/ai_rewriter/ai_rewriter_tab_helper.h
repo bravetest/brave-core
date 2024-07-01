@@ -46,9 +46,9 @@ class AIRewriterTabHelper
  private:
   explicit AIRewriterTabHelper(content::WebContents* contents);
 
-  ai_rewriter::AIRewriterButton* GetButton();
+  ai_rewriter::AIRewriterButtonView* GetButton();
 
-  raw_ptr<ai_rewriter::AIRewriterButton> button_;
+  raw_ptr<ai_rewriter::AIRewriterButtonView> button_;
   mojo::AssociatedReceiverSet<mojom::AIRewriterButton> receivers_;
 
   friend WebContentsUserData;

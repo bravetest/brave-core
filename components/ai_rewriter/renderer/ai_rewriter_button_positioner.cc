@@ -40,29 +40,6 @@
 
 namespace ai_rewriter {
 
-namespace {
-// class SelectionChangeEventListener : public blink::NativeEventListener {
-//  public:
-//   SelectionChangeEventListener(
-//       blink::Node* node,
-//       base::RepeatingCallback<void(blink::Event*)> handler)
-//       : node_(node), handler_(std::move(handler)) {}
-
-//   void Invoke(blink::ExecutionContext*, blink::Event* event) override {
-//     handler_.Run(event);
-//   }
-
-//   void AddListener() {
-//     node_->addEventListener(ev)
-//   }
-
-//  private:
-//   blink::Member<blink::Node> node_;
-//   blink::WebNode::EventType event_type_;
-//   base::RepeatingCallback<void(blink::Event*)> handler_;
-// };
-}  // namespace
-
 // See AutoFillAgent::GetCaretBounds for gfx::Rect
 
 AIRewriterButtonPositioner::AIRewriterButtonPositioner(
@@ -74,6 +51,12 @@ AIRewriterButtonPositioner::AIRewriterButtonPositioner(
 AIRewriterButtonPositioner::~AIRewriterButtonPositioner() = default;
 
 void AIRewriterButtonPositioner::OnDestruct() {
+  // If this frame had selected text, hide the button.
+  // auto* frame = render_frame()->GetWebFrame();
+  // if (frame->HasSelection()) {
+  //   button_->Hide();
+  // }
+
   delete this;
 }
 
@@ -107,7 +90,21 @@ void AIRewriterButtonPositioner::UpdateButton(blink::WebDocument document,
     return;
   }
 
+  // Only show the button when editable text is selected.
+  auto focused = frame->GetDocument().FocusedElement();
+  if (!focused || !focused.IsEditable()) {
+    button_->Hide();
+    return;
+  }
+
   auto bounds = frame->GetSelectionBoundsRectForTesting();
+
+  // If nothing is selected, hide the button.
+  if (bounds.IsEmpty()) {
+    button_->Hide();
+    return;
+  }
+
   auto viewport_bounds = render_frame()->ConvertViewportToWindow(bounds);
   button_->Show(viewport_bounds);
 }

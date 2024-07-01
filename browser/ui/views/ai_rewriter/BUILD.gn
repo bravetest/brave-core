@@ -5,8 +5,8 @@
 
 source_set("ai_rewriter") {
   sources = [
-    "ai_rewriter_button.cc",
-    "ai_rewriter_button.h",
+    "ai_rewriter_button_view.cc",
+    "ai_rewriter_button_view.h",
   ]
 
   deps = [

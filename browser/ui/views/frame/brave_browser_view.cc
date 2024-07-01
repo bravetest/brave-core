@@ -304,35 +304,6 @@ BraveBrowserView::BraveBrowserView(std::unique_ptr<Browser> browser)
 
   if (base::FeatureList::IsEnabled(tabs::features::kBraveSplitView) &&
       browser_->is_type_normal()) {
-    SplitViewBrowserData::CreateForBrowser(browser_.get());
-
-    auto devtools_web_view =
-        std::make_unique<views::WebView>(browser_->profile());
-    devtools_web_view->SetVisible(false);
-    auto contents_web_view =
-        std::make_unique<ActivatableContentsWebView>(browser_->profile());
-    contents_web_view->SetVisible(false);
-
-    secondary_devtools_web_view_ =
-        contents_container_->AddChildView(std::move(devtools_web_view));
-    secondary_contents_web_view_ =
-        contents_container_->AddChildView(std::move(contents_web_view));
-    split_view_separator_ = contents_container_->AddChildView(
-        std::make_unique<SplitViewSeparator>(browser_.get()));
-
-    auto* contents_layout_manager = static_cast<BraveContentsLayoutManager*>(
-        contents_container()->GetLayoutManager());
-    contents_layout_manager->set_secondary_contents_view(
-        secondary_contents_web_view_);
-    contents_layout_manager->set_secondary_devtools_view(
-        secondary_devtools_web_view_);
-    contents_layout_manager->SetSplitViewSeparator(split_view_separator_);
-
-    auto* split_view_browser_data =
-        SplitViewBrowserData::FromBrowser(browser_.get());
-    contents_layout_manager->set_split_view_browser_data(
-        split_view_browser_data);
-    split_view_observation_.Observe(split_view_browser_data);
   }
 
   const bool supports_vertical_tabs =

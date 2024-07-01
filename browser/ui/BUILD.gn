@@ -521,6 +521,8 @@ source_set("ui") {
       "views/split_view/split_view_menu_bubble.h",
       "views/split_view/split_view_separator.cc",
       "views/split_view/split_view_separator.h",
+      "views/split_view/split_view.cc",
+      "views/split_view/split_view.h",
       "views/split_view/split_view_separator_delegate.h",
       "views/tabs/brave_browser_tab_strip_controller.cc",
       "views/tabs/brave_browser_tab_strip_controller.h",

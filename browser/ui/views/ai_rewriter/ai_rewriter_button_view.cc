@@ -24,9 +24,11 @@
 #include "include/core/SkColor.h"
 #include "ui/base/metadata/metadata_impl_macros.h"
 #include "ui/base/models/image_model.h"
+#include "ui/color/color_id.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect.h"
+#include "ui/gfx/geometry/size.h"
 #include "ui/views/background.h"
 #include "ui/views/border.h"
 #include "ui/views/controls/button/label_button.h"
@@ -43,11 +45,15 @@ AIRewriterButtonView::AIRewriterButtonView(content::WebContents* contents)
       .SetBorder(views::CreateRoundedRectBorder(1, 12, SK_ColorGRAY))
       .SetLayoutManager(std::make_unique<views::FillLayout>())
       .AddChild(
-          views::Builder<views::MdTextButton>()
-              .SetCustomPadding(gfx::Insets::VH(8, 8))
+          views::Builder<views::LabelButton>()
               .SetImageModel(
                   views::LabelButton::ButtonState::STATE_NORMAL,
                   ui::ImageModel::FromVectorIcon(kLeoProductBraveLeoIcon))
+              .SetImageModel(views::LabelButton::ButtonState::STATE_HOVERED,
+                             ui::ImageModel::FromVectorIcon(
+                                 kLeoProductBraveLeoIcon,
+                                 ui::ColorIds::kColorButtonForeground))
+              .SetPreferredSize(gfx::Size(32, 32))
               .SetCallback(base::BindRepeating(
                   &AIRewriterButtonView::OpenDialog, base::Unretained(this))))
       .BuildChildren();
@@ -77,10 +83,10 @@ AIRewriterButtonView* AIRewriterButtonView::MaybeCreateButton(
   params.delegate = button;
   params.shadow_type = views::Widget::InitParams::ShadowType::kDrop;
   params.corner_radius = 12;
+  params.autosize = true;
+
   auto* widget = new views::Widget();
   widget->Init(std::move(params));
-  widget->SetBounds(
-      gfx::Rect(gfx::Point(100, 100), button->GetPreferredSize()));
   widget->Hide();
 
   return button;
@@ -97,11 +103,11 @@ void AIRewriterButtonView::Show(const gfx::Rect& rect) {
   auto top = browser_view->toolbar()->bounds().bottom();
 
   constexpr int kPaddingY = 8;
-  constexpr int kPaddingX = 8;
+  constexpr int kPaddingX = 20;
 
   auto size = GetPreferredSize();
   auto pos = rect.origin();
-  pos.Offset(GetPreferredSize().width() / 2 + kPaddingX,
+  pos.Offset(GetPreferredSize().width() + kPaddingX,
              top - GetPreferredSize().height() / 2 - kPaddingY);
   GetWidget()->SetBounds(gfx::Rect(pos, size));
 }

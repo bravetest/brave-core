@@ -60,12 +60,12 @@ export const TransactionSimulationNotSupportedSheet = ({
     React.useState(doNotShowAgain)
 
   // render
-  if (doNotShowAgain || !showSheet) {
+  if (doNotShowAgain) {
     return null
   }
 
   return (
-    <BottomSheet>
+    <BottomSheet isOpen={showSheet}>
       <TitleText>
         {getLocale('braveWalletTransactionSimulationNotAvailableForNetwork')}
       </TitleText>

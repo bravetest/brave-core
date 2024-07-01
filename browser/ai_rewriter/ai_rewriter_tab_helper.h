@@ -6,8 +6,6 @@
 #ifndef BRAVE_BROWSER_AI_REWRITER_AI_REWRITER_TAB_HELPER_H_
 #define BRAVE_BROWSER_AI_REWRITER_AI_REWRITER_TAB_HELPER_H_
 
-#include <optional>
-
 #include "brave/browser/ui/views/ai_rewriter/ai_rewriter_button_view.h"
 #include "brave/components/ai_rewriter/common/mojom/ai_rewriter.mojom.h"
 #include "content/public/browser/render_frame_host.h"
@@ -16,10 +14,7 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
 #include "mojo/public/cpp/bindings/associated_receiver_set.h"
-#include "mojo/public/cpp/bindings/pending_receiver.h"
-#include "mojo/public/cpp/bindings/receiver_set.h"
 #include "partition_alloc/pointers/raw_ptr.h"
-#include "ui/gfx/geometry/rect_f.h"
 
 namespace ai_rewriter {
 class AIRewriterTabHelper

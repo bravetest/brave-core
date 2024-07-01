@@ -44,9 +44,6 @@
 #include "brave/components/brave_news/common/subscriptions_snapshot.h"
 #include "brave/components/brave_private_cdn/private_cdn_helper.h"
 #include "brave/components/brave_private_cdn/private_cdn_request_helper.h"
-#include "chrome/browser/ui/browser.h"
-#include "chrome/browser/ui/browser_finder.h"
-#include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "components/favicon/core/favicon_service.h"
 #include "components/favicon_base/favicon_types.h"
 #include "components/history/core/browser/history_service.h"
@@ -583,9 +580,39 @@ void BraveNewsController::GetDisplayAd(GetDisplayAdCallback callback) {
   // TODO(petemill): maybe we need to have a way to re-fetch ads_service,
   // since it may have been disabled at time of service creation and enabled
   // some time later.
+  if (!ads_service_) {
     VLOG(1) << "GetDisplayAd: no ads service";
     std::move(callback).Run(nullptr);
     return;
+  }
+  auto on_ad_received = base::BindOnce(
+      [](GetDisplayAdCallback callback, const std::string& dimensions,
+         std::optional<base::Value::Dict> ad_data) {
+        if (!ad_data) {
+          VLOG(1) << "GetDisplayAd: no ad";
+          std::move(callback).Run(nullptr);
+          return;
+        }
+        VLOG(1) << "GetDisplayAd: GOT ad";
+        // Convert to our mojom entity.
+        // TODO(petemill): brave_ads seems to use mojom, perhaps we can receive
+        // and send to callback the actual typed mojom struct from brave_ads?
+        auto ad = mojom::DisplayAd::New();
+        ad->uuid = *ad_data->FindString("uuid");
+        ad->creative_instance_id = *ad_data->FindString("creativeInstanceId");
+        if (const auto* value = ad_data->FindString("ctaText")) {
+          ad->cta_text = *value;
+        }
+        ad->dimensions = *ad_data->FindString("dimensions");
+        ad->title = *ad_data->FindString("title");
+        ad->description = *ad_data->FindString("description");
+        ad->image = mojom::Image::NewPaddedImageUrl(
+            GURL(*ad_data->FindString("imageUrl")));
+        ad->target_url = GURL(*ad_data->FindString("targetUrl"));
+        std::move(callback).Run(std::move(ad));
+      },
+      std::move(callback));
+  ads_service_->MaybeServeInlineContentAd("900x750", std::move(on_ad_received));
 }
 
 void BraveNewsController::OnInteractionSessionStarted() {

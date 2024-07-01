@@ -12,7 +12,6 @@
 #include "brave/components/ai_rewriter/common/mojom/ai_rewriter.mojom.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "mojo/public/cpp/bindings/associated_remote.h"
-#include "third_party/blink/public/web/web_element.h"
 
 namespace content {
 class RenderFrame;

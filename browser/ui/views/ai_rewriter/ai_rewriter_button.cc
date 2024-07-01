@@ -55,6 +55,7 @@ AIRewriterButton::AIRewriterButton(content::WebContents* contents)
                         &AIRewriterButton::OpenDialog, base::Unretained(this))))
       .BuildChildren();
 }
+
 AIRewriterButton::~AIRewriterButton() = default;
 
 AIRewriterButton* AIRewriterButton::CreateButton(
@@ -71,12 +72,13 @@ AIRewriterButton* AIRewriterButton::CreateButton(
   views::Widget::InitParams params(
       views::Widget::InitParams::Type::TYPE_CONTROL);
   params.parent = parent_widget->GetNativeView();
-  params.activatable = views::Widget::InitParams::Activatable::kYes;
+  params.activatable = views::Widget::InitParams::Activatable::kNo;
   params.delegate = button;
   auto* widget = new views::Widget();
   widget->Init(std::move(params));
   widget->SetBounds(
       gfx::Rect(gfx::Point(100, 100), button->GetPreferredSize()));
+  widget->Hide();
 
   return button;
 }
@@ -90,8 +92,6 @@ void AIRewriterButton::Show(const gfx::Rect& rect) {
   CHECK(browser_view);
 
   auto top = browser_view->toolbar()->bounds().bottom();
-
-  LOG(ERROR) << "Bottom of toolbar: " << top;
 
   auto size = GetPreferredSize();
   auto pos = rect.top_right();

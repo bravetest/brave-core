@@ -10,13 +10,14 @@
 #include "chrome/browser/ui/browser_finder.h"
 #include "content/public/browser/page.h"
 #include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
+#include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/visibility.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
 #include "mojo/public/cpp/bindings/pending_associated_receiver.h"
 #include "ui/gfx/geometry/rect.h"
-#include "ui/gfx/geometry/rect_f.h"
 
 namespace ai_rewriter {
 
@@ -43,7 +44,8 @@ void AIRewriterTabHelper::Bind(
   auto* tab_helper = AIRewriterTabHelper::FromWebContents(contents);
   CHECK(tab_helper);
 
-  tab_helper->receivers_.Add(tab_helper, std::move(receiver));
+  tab_helper->receivers_.Add(tab_helper, std::move(receiver),
+                             rfh->GetGlobalFrameToken());
 }
 
 void AIRewriterTabHelper::OnVisibilityChanged(content::Visibility visibility) {
@@ -61,14 +63,28 @@ void AIRewriterTabHelper::Hide() {
 }
 
 void AIRewriterTabHelper::Show(const gfx::Rect& rect) {
+  auto* rfh =
+      content::RenderFrameHost::FromFrameToken(receivers_.current_context());
+  if (!rfh) {
+    return;
+  }
+
+  auto* view = rfh->GetView();
+  if (!view) {
+    return;
+  }
+
   if (auto* button = GetButton()) {
-    button->Show(rect);
+    auto transformed_origin =
+        view->TransformPointToRootCoordSpace(rect.origin());
+    button->Show(gfx::Rect(transformed_origin, rect.size()));
   }
 }
 
 ai_rewriter::AIRewriterButtonView* AIRewriterTabHelper::GetButton() {
   if (!button_) {
-    button_ = ai_rewriter::AIRewriterButtonView::MaybeCreateButton(web_contents());
+    button_ =
+        ai_rewriter::AIRewriterButtonView::MaybeCreateButton(web_contents());
   }
 
   return button_;

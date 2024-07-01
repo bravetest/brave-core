@@ -29,11 +29,13 @@
 #include "third_party/blink/renderer/core/dom/events/native_event_listener.h"
 #include "third_party/blink/renderer/core/dom/node.h"
 #include "third_party/blink/renderer/core/editing/dom_selection.h"
+#include "third_party/blink/renderer/core/editing/frame_selection.h"
 #include "third_party/blink/renderer/core/editing/selection_controller.h"
 #include "third_party/blink/renderer/core/event_type_names.h"
 #include "third_party/blink/renderer/core/execution_context/execution_context.h"
 #include "third_party/blink/renderer/core/frame/local_frame.h"
 #include "third_party/blink/renderer/core/input/event_handler.h"
+#include "third_party/blink/renderer/core/layout/geometry/physical_rect.h"
 #include "third_party/blink/renderer/core/page/context_menu_controller.h"
 #include "third_party/blink/renderer/platform/heap/member.h"
 #include "ui/gfx/geometry/rect.h"
@@ -51,12 +53,6 @@ AIRewriterButtonPositioner::AIRewriterButtonPositioner(
 AIRewriterButtonPositioner::~AIRewriterButtonPositioner() = default;
 
 void AIRewriterButtonPositioner::OnDestruct() {
-  // If this frame had selected text, hide the button.
-  // auto* frame = render_frame()->GetWebFrame();
-  // if (frame->HasSelection()) {
-  //   button_->Hide();
-  // }
-
   delete this;
 }
 
@@ -97,15 +93,21 @@ void AIRewriterButtonPositioner::UpdateButton(blink::WebDocument document,
     return;
   }
 
-  auto bounds = frame->GetSelectionBoundsRectForTesting();
+  auto* local_frame =
+      blink::LocalFrame::FromFrameToken(frame->GetLocalFrameToken());
+  auto selection_bounds = blink::ToPixelSnappedRect(
+      local_frame->Selection().AbsoluteUnclippedBounds());
 
   // If nothing is selected, hide the button.
-  if (bounds.IsEmpty()) {
+  if (selection_bounds.IsEmpty()) {
     button_->Hide();
     return;
   }
 
-  auto viewport_bounds = render_frame()->ConvertViewportToWindow(bounds);
+  selection_bounds = local_frame->View()->FrameToViewport(selection_bounds);
+
+  auto viewport_bounds =
+      render_frame()->ConvertViewportToWindow(selection_bounds);
   button_->Show(viewport_bounds);
 }
 

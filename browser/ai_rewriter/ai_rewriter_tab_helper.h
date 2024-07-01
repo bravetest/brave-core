@@ -49,7 +49,8 @@ class AIRewriterTabHelper
   ai_rewriter::AIRewriterButtonView* GetButton();
 
   raw_ptr<ai_rewriter::AIRewriterButtonView> button_;
-  mojo::AssociatedReceiverSet<mojom::AIRewriterButton> receivers_;
+  mojo::AssociatedReceiverSet<mojom::AIRewriterButton, content::GlobalRenderFrameHostToken>
+      receivers_;
 
   friend WebContentsUserData;
   WEB_CONTENTS_USER_DATA_KEY_DECL();

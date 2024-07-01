@@ -17,6 +17,11 @@ namespace content {
 class RenderFrame;
 }
 
+namespace blink {
+class WebDocument;
+class WebDOMEvent;
+}
+
 namespace ai_rewriter {
 
 class COMPONENT_EXPORT(AI_REWRITER_RENDERER) AIRewriterButtonPositioner

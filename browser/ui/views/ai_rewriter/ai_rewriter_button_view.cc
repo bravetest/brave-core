@@ -75,6 +75,8 @@ AIRewriterButtonView* AIRewriterButtonView::MaybeCreateButton(
   params.parent = parent_widget->GetNativeView();
   params.activatable = views::Widget::InitParams::Activatable::kNo;
   params.delegate = button;
+  params.shadow_type = views::Widget::InitParams::ShadowType::kDrop;
+  params.corner_radius = 12;
   auto* widget = new views::Widget();
   widget->Init(std::move(params));
   widget->SetBounds(
@@ -94,9 +96,13 @@ void AIRewriterButtonView::Show(const gfx::Rect& rect) {
 
   auto top = browser_view->toolbar()->bounds().bottom();
 
+  constexpr int kPaddingY = 8;
+  constexpr int kPaddingX = 8;
+
   auto size = GetPreferredSize();
-  auto pos = rect.top_right();
-  pos.Offset(0, top);
+  auto pos = rect.origin();
+  pos.Offset(GetPreferredSize().width() / 2 + kPaddingX,
+             top - GetPreferredSize().height() / 2 - kPaddingY);
   GetWidget()->SetBounds(gfx::Rect(pos, size));
 }
 

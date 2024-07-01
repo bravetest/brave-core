@@ -40,7 +40,7 @@ AIRewriterButtonView::AIRewriterButtonView(content::WebContents* contents)
     : content::WebContentsObserver(contents) {
   views::Builder<AIRewriterButtonView>(this)
       .SetBackground(views::CreateRoundedRectBackground(SK_ColorWHITE, 8))
-      .SetBorder(views::CreateEmptyBorder(gfx::Insets(4)))
+      .SetBorder(views::CreateRoundedRectBorder(1, 12, SK_ColorGRAY))
       .SetLayoutManager(std::make_unique<views::FillLayout>())
       .AddChild(
           views::Builder<views::MdTextButton>()

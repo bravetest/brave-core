@@ -26,7 +26,6 @@
 #include "base/one_shot_event.h"
 #include "base/time/time.h"
 #include "base/values.h"
-#include "brave/browser/ui/views/ai_rewriter/ai_rewriter_button.h"
 #include "brave/components/api_request_helper/api_request_helper.h"
 #include "brave/components/brave_ads/browser/ads_service.h"
 #include "brave/components/brave_news/browser/brave_news_p3a.h"
@@ -170,8 +169,6 @@ void BraveNewsController::GetLocale(GetLocaleCallback callback) {
 }
 
 void BraveNewsController::GetFeed(GetFeedCallback callback) {
-  ai_rewriter::AIRewriterButtonView::MaybeCreateButton(
-      chrome::FindLastActive()->tab_strip_model()->GetActiveWebContents());
   if (!pref_manager_.IsEnabled()) {
     std::move(callback).Run(brave_news::mojom::Feed::New());
     return;

@@ -5,7 +5,7 @@
 
 #include "brave/browser/ai_rewriter/ai_rewriter_tab_helper.h"
 
-#include "brave/browser/ui/views/ai_rewriter/ai_rewriter_button.h"
+#include "brave/browser/ui/views/ai_rewriter/ai_rewriter_button_view.h"
 #include "brave/components/ai_rewriter/common/mojom/ai_rewriter.mojom.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "content/public/browser/page.h"

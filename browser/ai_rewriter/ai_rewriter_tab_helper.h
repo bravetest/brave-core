@@ -8,7 +8,7 @@
 
 #include <optional>
 
-#include "brave/browser/ui/views/ai_rewriter/ai_rewriter_button.h"
+#include "brave/browser/ui/views/ai_rewriter/ai_rewriter_button_view.h"
 #include "brave/components/ai_rewriter/common/mojom/ai_rewriter.mojom.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/visibility.h"

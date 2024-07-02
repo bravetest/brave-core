@@ -61,6 +61,10 @@ void AIRewriterTabHelper::Hide() {
   if (button_) {
     button_->Hide();
   }
+
+  if (on_visibility_change_for_testing_) {
+    on_visibility_change_for_testing_.Run();
+  }
 }
 
 void AIRewriterTabHelper::Show(const gfx::Rect& rect) {
@@ -79,6 +83,10 @@ void AIRewriterTabHelper::Show(const gfx::Rect& rect) {
     auto transformed_origin =
         view->TransformPointToRootCoordSpace(rect.origin());
     button->Show(gfx::Rect(transformed_origin, rect.size()));
+  }
+
+  if (on_visibility_change_for_testing_) {
+    on_visibility_change_for_testing_.Run();
   }
 }
 

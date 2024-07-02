@@ -95,6 +95,7 @@ base::WeakPtr<AIRewriterButtonView> AIRewriterButtonView::MaybeCreateButton(
 }
 
 void AIRewriterButtonView::Show(const gfx::Rect& rect) {
+  LOG(ERROR) << __FUNCTION__;
   CHECK(GetWidget());
   GetWidget()->Show();
 
@@ -115,6 +116,7 @@ void AIRewriterButtonView::Show(const gfx::Rect& rect) {
 }
 
 void AIRewriterButtonView::Hide() {
+  LOG(ERROR) << __FUNCTION__;
   GetWidget()->Hide();
 }
 

@@ -6,6 +6,7 @@
 #ifndef BRAVE_BROWSER_AI_REWRITER_AI_REWRITER_TAB_HELPER_H_
 #define BRAVE_BROWSER_AI_REWRITER_AI_REWRITER_TAB_HELPER_H_
 
+#include "base/functional/callback_forward.h"
 #include "base/memory/weak_ptr.h"
 #include "brave/browser/ui/views/ai_rewriter/ai_rewriter_button_view.h"
 #include "brave/components/ai_rewriter/common/mojom/ai_rewriter.mojom.h"
@@ -40,6 +41,11 @@ class AIRewriterTabHelper
 
   base::WeakPtr<AIRewriterButtonView> button_for_testing() { return button_; }
 
+  void SetOnVisibilityChangeForTesting(
+      base::RepeatingClosure visibility_change_callback) {
+    on_visibility_change_for_testing_ = visibility_change_callback;
+  }
+
  private:
   explicit AIRewriterTabHelper(content::WebContents* contents);
 
@@ -49,6 +55,8 @@ class AIRewriterTabHelper
   mojo::AssociatedReceiverSet<mojom::AIRewriterButton,
                               content::GlobalRenderFrameHostToken>
       receivers_;
+
+  base::RepeatingClosure on_visibility_change_for_testing_;
 
   friend WebContentsUserData;
   WEB_CONTENTS_USER_DATA_KEY_DECL();

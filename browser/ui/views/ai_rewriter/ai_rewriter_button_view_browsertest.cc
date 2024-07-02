@@ -71,17 +71,18 @@ class AIRewriterButtonViewBrowserTest : public InProcessBrowserTest {
   }
 
   void SelectTextInSelectorOrClear(std::string selector) {
-    if (selector.empty()) {
-      EXPECT_TRUE(content::ExecJs(contents()->GetFocusedFrame(),
-                                  "document.getSelection().removeAllRanges()"));
-    } else {
-      EXPECT_TRUE(content::ExecJs(
-          contents()->GetFocusedFrame(),
-          base::StrCat({"document.getSelection().selectAllChildren(document."
-                        "querySelector('",
-                        selector, "'))"})));
-    }
-    base::RunLoop().RunUntilIdle();
+    EXPECT_TRUE(
+        content::ExecJs(contents()->GetPrimaryMainFrame(),
+                        base::StrCat({"selectText('", selector, "')"})));
+  }
+
+  void WaitForVisibilityChange() {
+    auto* helper = AIRewriterTabHelper::FromWebContents(contents());
+    CHECK(helper);
+
+    base::RunLoop loop;
+    helper->SetOnVisibilityChangeForTesting(loop.QuitClosure());
+    loop.Run();
   }
 
  private:
@@ -109,18 +110,18 @@ IN_PROC_BROWSER_TEST_F(AIRewriterButtonViewBrowserTest,
 IN_PROC_BROWSER_TEST_F(AIRewriterButtonViewBrowserTest,
                        ButtonShowsWhenEditableTextSelected) {
   OpenPageWithInputAndSelectTextInSelector("#editable");
+  WaitForVisibilityChange();
 
   auto* tab_helper = AIRewriterTabHelper::FromWebContents(contents());
-  base::RunLoop().Run();
   EXPECT_TRUE(tab_helper);
   EXPECT_TRUE(tab_helper->button_for_testing());
   EXPECT_TRUE(tab_helper->button_for_testing()->GetWidget()->IsVisible());
-
 }
 
 IN_PROC_BROWSER_TEST_F(AIRewriterButtonViewBrowserTest,
                        ShownButtonHidesWhenNonEditableIsSelected) {
   OpenPageWithInputAndSelectTextInSelector("#editable");
+  WaitForVisibilityChange();
 
   auto* tab_helper = AIRewriterTabHelper::FromWebContents(contents());
   EXPECT_TRUE(tab_helper);
@@ -128,6 +129,7 @@ IN_PROC_BROWSER_TEST_F(AIRewriterButtonViewBrowserTest,
   EXPECT_TRUE(tab_helper->button_for_testing()->GetWidget()->IsVisible());
 
   SelectTextInSelectorOrClear("#non-editable");
+  WaitForVisibilityChange();
 
   EXPECT_TRUE(tab_helper->button_for_testing());
   EXPECT_FALSE(tab_helper->button_for_testing()->GetWidget()->IsVisible());
@@ -136,6 +138,7 @@ IN_PROC_BROWSER_TEST_F(AIRewriterButtonViewBrowserTest,
 IN_PROC_BROWSER_TEST_F(AIRewriterButtonViewBrowserTest,
                        ButtonHidesWhenPageNavigated) {
   OpenPageWithInputAndSelectTextInSelector("#editable");
+  WaitForVisibilityChange();
 
   auto* tab_helper = AIRewriterTabHelper::FromWebContents(contents());
   EXPECT_TRUE(tab_helper);
@@ -150,6 +153,7 @@ IN_PROC_BROWSER_TEST_F(AIRewriterButtonViewBrowserTest,
 IN_PROC_BROWSER_TEST_F(AIRewriterButtonViewBrowserTest,
                        ButtonDestroyedWhenTabClosed) {
   OpenPageWithInputAndSelectTextInSelector("#editable");
+  WaitForVisibilityChange();
 
   auto* tab_helper = AIRewriterTabHelper::FromWebContents(contents());
   EXPECT_TRUE(tab_helper);
@@ -174,6 +178,7 @@ IN_PROC_BROWSER_TEST_F(AIRewriterButtonViewBrowserTest,
 IN_PROC_BROWSER_TEST_F(AIRewriterButtonViewBrowserTest,
                        ButtonClickOpensRewriterDialog) {
   OpenPageWithInputAndSelectTextInSelector("#editable");
+  WaitForVisibilityChange();
 
   auto* tab_helper = AIRewriterTabHelper::FromWebContents(contents());
   EXPECT_TRUE(tab_helper);

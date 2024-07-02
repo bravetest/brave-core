@@ -6,6 +6,7 @@
 #include "brave/browser/ui/views/ai_rewriter/ai_rewriter_button_view.h"
 
 #include <memory>
+#include <utility>
 
 #include "base/functional/bind.h"
 #include "base/memory/weak_ptr.h"
@@ -95,7 +96,6 @@ base::WeakPtr<AIRewriterButtonView> AIRewriterButtonView::MaybeCreateButton(
 }
 
 void AIRewriterButtonView::Show(const gfx::Rect& rect) {
-  LOG(ERROR) << __FUNCTION__;
   CHECK(GetWidget());
   GetWidget()->Show();
 
@@ -116,7 +116,6 @@ void AIRewriterButtonView::Show(const gfx::Rect& rect) {
 }
 
 void AIRewriterButtonView::Hide() {
-  LOG(ERROR) << __FUNCTION__;
   GetWidget()->Hide();
 }
 

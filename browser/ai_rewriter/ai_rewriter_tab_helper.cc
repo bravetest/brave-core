@@ -5,6 +5,8 @@
 
 #include "brave/browser/ai_rewriter/ai_rewriter_tab_helper.h"
 
+#include <utility>
+
 #include "base/memory/weak_ptr.h"
 #include "brave/browser/ui/views/ai_rewriter/ai_rewriter_button_view.h"
 #include "brave/components/ai_rewriter/common/mojom/ai_rewriter.mojom.h"

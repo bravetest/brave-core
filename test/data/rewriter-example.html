@@ -26,12 +26,13 @@
 
         const el = document.querySelector(selector)
 
+        // Create a range for this element
         const range = document.createRange()
         range.selectNodeContents(el)
 
+        // Clear the previous selection (if any), and set it to this element.
         document.getSelection().removeAllRanges()
         document.getSelection().addRange(range)
-
         el.select?.()
     }
 </script>

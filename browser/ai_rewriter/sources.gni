@@ -8,5 +8,4 @@ brave_browser_ai_rewriter_sources = [
   "//brave/browser/ai_rewriter/ai_rewriter_tab_helper.h",
 ]
 
-brave_browser_ai_rewriter_deps = [
-]
+brave_browser_ai_rewriter_deps = []

@@ -20,7 +20,7 @@ class RenderFrame;
 namespace blink {
 class WebDocument;
 class WebDOMEvent;
-}
+}  // namespace blink
 
 namespace ai_rewriter {
 

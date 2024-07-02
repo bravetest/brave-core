@@ -22,13 +22,22 @@ source_set("browser_tests") {
   testonly = true
 
   sources = [ "ai_rewriter_button_view_browsertest.cc" ]
-  
+
   defines = [ "HAS_OUT_OF_PROC_TEST_RUNNER" ]
 
   deps = [
     ":ai_rewriter",
     "//base",
+    "//brave/browser",
+    "//brave/components/ai_rewriter/common",
+    "//brave/components/constants",
+    "//chrome/browser/ui",
+    "//chrome/test",
+    "//content/test:test_support",
+    "//net",
     "//testing/gmock",
     "//testing/gtest",
+    "//ui/base",
+    "//url",
   ]
 }

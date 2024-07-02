@@ -33,19 +33,16 @@ namespace ai_rewriter {
 AIRewriterButtonPositioner::AIRewriterButtonPositioner(
     content::RenderFrame* frame)
     : content::RenderFrameObserver(frame) {
-  LOG(ERROR) << "Created";
   frame->GetRemoteAssociatedInterfaces()->GetInterface(&button_);
 }
 
 AIRewriterButtonPositioner::~AIRewriterButtonPositioner() = default;
 
 void AIRewriterButtonPositioner::OnDestruct() {
-  LOG(ERROR) << "Destructed";
   delete this;
 }
 
 void AIRewriterButtonPositioner::DidCreateDocumentElement() {
-  LOG(ERROR) << "Created document element";
   auto document = render_frame()->GetWebFrame()->GetDocument();
   CHECK(!document.IsNull());
   remove_listener_ = document.AddEventListener(
@@ -55,27 +52,21 @@ void AIRewriterButtonPositioner::DidCreateDocumentElement() {
 }
 
 void AIRewriterButtonPositioner::DidChangeScrollOffset() {
-  LOG(ERROR) << "Scrolled";
   UpdateButton(render_frame()->GetWebFrame()->GetDocument(),
                blink::WebDOMEvent());
 }
 
 void AIRewriterButtonPositioner::UpdateButton(blink::WebDocument document,
                                               blink::WebDOMEvent event) {
-  LOG(ERROR) << "Updated button";
   if (document.IsNull()) {
-    LOG(ERROR) << "No doc";
     return;
   }
 
   auto* frame = document.GetFrame();
   auto selection = frame->SelectionRange();
 
-  frame->GetSelectionBoundsRectForTesting();
-
   // Backwards selections have negative length, so use abs
   if (abs(selection.length()) < 2) {
-    LOG(ERROR) << "Not much selected: " << selection.length();
     // Hide button, not much is selected
     button_->Hide();
     return;
@@ -84,12 +75,9 @@ void AIRewriterButtonPositioner::UpdateButton(blink::WebDocument document,
   // Only show the button when editable text is selected.
   auto focused = frame->GetDocument().FocusedElement();
   if (!focused || !focused.IsEditable()) {
-    LOG(ERROR) << "!focused || !editable";
     button_->Hide();
     return;
   }
-
-  LOG(ERROR) << "Focused: " << focused.GetIdAttribute().Ascii();
 
   auto* local_frame =
       blink::LocalFrame::FromFrameToken(frame->GetLocalFrameToken());
@@ -98,7 +86,6 @@ void AIRewriterButtonPositioner::UpdateButton(blink::WebDocument document,
 
   // If nothing is selected, hide the button.
   if (selection_bounds.IsEmpty()) {
-    LOG(ERROR) << "No bounds";
     button_->Hide();
     return;
   }
@@ -107,7 +94,6 @@ void AIRewriterButtonPositioner::UpdateButton(blink::WebDocument document,
 
   auto viewport_bounds =
       render_frame()->ConvertViewportToWindow(selection_bounds);
-  LOG(ERROR) << "Showing bounds: " << viewport_bounds.ToString();
   button_->Show(viewport_bounds);
 }
 

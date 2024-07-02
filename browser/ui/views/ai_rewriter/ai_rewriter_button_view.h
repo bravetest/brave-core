@@ -6,6 +6,8 @@
 #ifndef BRAVE_BROWSER_UI_VIEWS_AI_REWRITER_AI_REWRITER_BUTTON_VIEW_H_
 #define BRAVE_BROWSER_UI_VIEWS_AI_REWRITER_AI_REWRITER_BUTTON_VIEW_H_
 
+#include "base/memory/weak_ptr.h"
+#include "brave/browser/ui/ai_rewriter/ai_rewriter_dialog_delegate.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "ui/base/metadata/metadata_header_macros.h"
@@ -24,13 +26,15 @@ class AIRewriterButtonView : public views::WidgetDelegateView,
   AIRewriterButtonView& operator=(const AIRewriterButtonView&) = delete;
   ~AIRewriterButtonView() override;
 
-  static AIRewriterButtonView* MaybeCreateButton(
+  static base::WeakPtr<AIRewriterButtonView> MaybeCreateButton(
       content::WebContents* contents);
 
   void Show(const gfx::Rect& rect);
   void Hide();
 
-  void OpenDialog();
+  AIRewriterDialogDelegate* OpenDialog();
+
+  base::WeakPtr<AIRewriterButtonView> GetWeakPtr();
 
   // content::WebContentsObserver:
   void WebContentsDestroyed() override;
@@ -38,6 +42,8 @@ class AIRewriterButtonView : public views::WidgetDelegateView,
 
  private:
   int top_offset_;
+
+  base::WeakPtrFactory<AIRewriterButtonView> weak_ptr_factory_{this};
 };
 
 BEGIN_VIEW_BUILDER(/*no export*/,

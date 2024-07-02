@@ -1124,6 +1124,7 @@ test("brave_browser_tests") {
     ]
     deps += [
       "//brave/browser/ui/sidebar:browser_tests",
+      "//brave/browser/ui/views/ai_rewriter:browser_tests",
       "//brave/browser/ui/views/brave_ads:browser_tests",
       "//brave/browser/ui/views/tabs:browser_tests",
       "//brave/components/sidebar/browser",

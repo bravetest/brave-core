@@ -6,6 +6,7 @@
 #ifndef BRAVE_BROWSER_AI_REWRITER_AI_REWRITER_TAB_HELPER_H_
 #define BRAVE_BROWSER_AI_REWRITER_AI_REWRITER_TAB_HELPER_H_
 
+#include "base/memory/weak_ptr.h"
 #include "brave/browser/ui/views/ai_rewriter/ai_rewriter_button_view.h"
 #include "brave/components/ai_rewriter/common/mojom/ai_rewriter.mojom.h"
 #include "content/public/browser/render_frame_host.h"
@@ -14,7 +15,6 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
 #include "mojo/public/cpp/bindings/associated_receiver_set.h"
-#include "partition_alloc/pointers/raw_ptr.h"
 
 namespace ai_rewriter {
 class AIRewriterTabHelper
@@ -38,13 +38,16 @@ class AIRewriterTabHelper
   void Hide() override;
   void Show(const gfx::Rect& rect) override;
 
+  base::WeakPtr<AIRewriterButtonView> button_for_testing() { return button_; }
+
  private:
   explicit AIRewriterTabHelper(content::WebContents* contents);
 
   ai_rewriter::AIRewriterButtonView* GetButton();
 
-  raw_ptr<ai_rewriter::AIRewriterButtonView> button_;
-  mojo::AssociatedReceiverSet<mojom::AIRewriterButton, content::GlobalRenderFrameHostToken>
+  base::WeakPtr<ai_rewriter::AIRewriterButtonView> button_;
+  mojo::AssociatedReceiverSet<mojom::AIRewriterButton,
+                              content::GlobalRenderFrameHostToken>
       receivers_;
 
   friend WebContentsUserData;

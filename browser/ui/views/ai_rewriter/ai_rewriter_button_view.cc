@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "base/functional/bind.h"
+#include "base/memory/weak_ptr.h"
 #include "base/strings/utf_string_conversions.h"
 #include "brave/browser/ui/ai_rewriter/ai_rewriter_dialog_delegate.h"
 #include "brave/components/vector_icons/vector_icons.h"
@@ -55,13 +56,14 @@ AIRewriterButtonView::AIRewriterButtonView(content::WebContents* contents)
                                  ui::ColorIds::kColorButtonForeground))
               .SetPreferredSize(gfx::Size(32, 32))
               .SetCallback(base::BindRepeating(
-                  &AIRewriterButtonView::OpenDialog, base::Unretained(this))))
+                  [](AIRewriterButtonView* view) { view->OpenDialog(); },
+                  base::Unretained(this))))
       .BuildChildren();
 }
 
 AIRewriterButtonView::~AIRewriterButtonView() = default;
 
-AIRewriterButtonView* AIRewriterButtonView::MaybeCreateButton(
+base::WeakPtr<AIRewriterButtonView> AIRewriterButtonView::MaybeCreateButton(
     content::WebContents* contents) {
   auto* browser = chrome::FindBrowserWithTab(contents);
 
@@ -89,7 +91,7 @@ AIRewriterButtonView* AIRewriterButtonView::MaybeCreateButton(
   widget->Init(std::move(params));
   widget->Hide();
 
-  return button;
+  return button->GetWeakPtr();
 }
 
 void AIRewriterButtonView::Show(const gfx::Rect& rect) {
@@ -116,17 +118,22 @@ void AIRewriterButtonView::Hide() {
   GetWidget()->Hide();
 }
 
-void AIRewriterButtonView::OpenDialog() {
+AIRewriterDialogDelegate* AIRewriterButtonView::OpenDialog() {
   auto* host = web_contents()->GetFocusedFrame()->GetRenderWidgetHost();
   CHECK(host);
 
   auto* host_view = host->GetView();
   if (!host_view) {
-    return;
+    return nullptr;
   }
 
   auto selected = host_view->GetSelectedText();
-  AIRewriterDialogDelegate::Show(web_contents(), base::UTF16ToUTF8(selected));
+  return AIRewriterDialogDelegate::Show(web_contents(),
+                                        base::UTF16ToUTF8(selected));
+}
+
+base::WeakPtr<AIRewriterButtonView> AIRewriterButtonView::GetWeakPtr() {
+  return weak_ptr_factory_.GetWeakPtr();
 }
 
 void AIRewriterButtonView::PrimaryPageChanged(content::Page& page) {

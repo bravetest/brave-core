@@ -17,3 +17,18 @@ source_set("ai_rewriter") {
     "//ui/views",
   ]
 }
+
+source_set("browser_tests") {
+  testonly = true
+
+  sources = [ "ai_rewriter_button_view_browsertest.cc" ]
+  
+  defines = [ "HAS_OUT_OF_PROC_TEST_RUNNER" ]
+
+  deps = [
+    ":ai_rewriter",
+    "//base",
+    "//testing/gmock",
+    "//testing/gtest",
+  ]
+}

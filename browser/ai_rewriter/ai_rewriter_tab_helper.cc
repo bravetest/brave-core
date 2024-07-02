@@ -5,6 +5,7 @@
 
 #include "brave/browser/ai_rewriter/ai_rewriter_tab_helper.h"
 
+#include "base/memory/weak_ptr.h"
 #include "brave/browser/ui/views/ai_rewriter/ai_rewriter_button_view.h"
 #include "brave/components/ai_rewriter/common/mojom/ai_rewriter.mojom.h"
 #include "chrome/browser/ui/browser_finder.h"
@@ -57,8 +58,8 @@ void AIRewriterTabHelper::OnVisibilityChanged(content::Visibility visibility) {
 void AIRewriterTabHelper::PrimaryPageChanged(content::Page& page) {}
 
 void AIRewriterTabHelper::Hide() {
-  if (auto* button = GetButton()) {
-    button->Hide();
+  if (button_) {
+    button_->Hide();
   }
 }
 
@@ -87,7 +88,7 @@ ai_rewriter::AIRewriterButtonView* AIRewriterTabHelper::GetButton() {
         ai_rewriter::AIRewriterButtonView::MaybeCreateButton(web_contents());
   }
 
-  return button_;
+  return button_.get();
 }
 
 WEB_CONTENTS_USER_DATA_KEY_IMPL(AIRewriterTabHelper);
